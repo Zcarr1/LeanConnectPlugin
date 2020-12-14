@@ -15,6 +15,8 @@ import hsc.com.leanconnectlibforservices.LeanConnectMobile;
  */
 public class LeanConnectPlugin extends CordovaPlugin {
 
+    private LeanConnectInterface leanConnectInterface;
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("coolMethod")) {
