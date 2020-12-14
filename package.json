@@ -1,0 +1,17 @@
+{
+  "name": "info.androidabcd.plugins.leanconnect",
+  "version": "1.0.0",
+  "description": "plugin lean connect",
+  "cordova": {
+    "id": "info.androidabcd.plugins.leanconnect",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Stefano Scarrone",
+  "license": "ISC"
+}

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="info.androidabcd.plugins.leanconnect" version="1.0.0"
+	xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>LeanConnectPlugin</name>
+	<js-module name="LeanConnectPlugin" src="www/LeanConnectPlugin.js">
+		<clobbers target="cordova.plugins.LeanConnectPlugin" />
+	</js-module>
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="LeanConnectPlugin">
+				<param name="android-package" value="info.androidabcd.plugins.leanconnect.LeanConnectPlugin" />
+			</feature>
+		</config-file>
+		<config-file parent="/*" target="AndroidManifest.xml"></config-file>
+		<source-file src="src/android/LeanConnectPlugin.java" target-dir="src/info/androidabcd/plugins/leanconnect/LeanConnectPlugin" />
+        <resource-file src="src/android/libs/leanConnectInterfaceLib-debug.aar" target="libs/leanConnectInterfaceLib-debug.aar" />
+        <resource-file src="src/android/libs/leanConnectLibForServices-debug.aar" target="libs/leanConnectLibForServices-debug.aar" />
+	</platform>
+</plugin>
