@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import hsc.com.leanConnectInterfaceLib.LeanConnectInterface;
+import hsc.com.leanconnectlibforservices.LeanConnectMobile;
+
 /**
  * This class echoes a string called from JavaScript.
  */
