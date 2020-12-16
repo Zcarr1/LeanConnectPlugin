@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+
 import hsc.com.leanConnectInterfaceLib.LeanConnectInterface;
 import hsc.com.leanconnectlibforservices.LeanConnectMobile;
 
@@ -28,7 +30,9 @@ public class LeanConnectPlugin
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        this.leanConnectInterface = new LeanConnectMobile(this);
+
+        Context context = this.cordova.getActivity().getApplicationContext();
+        this.leanConnectInterface = new LeanConnectMobile(context);
         //this.leanConnectInterface.setOnConnectionListener(this);
         //this.leanConnectInterface.setOnCommandResponseListener(this);
 
@@ -107,7 +111,8 @@ public class LeanConnectPlugin
         boolean res = false;
         try {
             res = leanConnectInterface.isConnected();
-            callbackContext.success(res);
+            String str = String.valueOf(res);
+            callbackContext.success(str);
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
