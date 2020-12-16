@@ -5,10 +5,7 @@ android {
       multiDexEnabled true
    }
 }
-
-dexOptions {
-   javaMaxHeapSize "4g"
-}
+o
 
 dependencies {
    compile 'com.android.support:multidex:1.0.0'
