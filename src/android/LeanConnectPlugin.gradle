@@ -1,5 +1,7 @@
-defaultConfig {
-    multiDexEnabled true
+android {
+    defaultConfig {
+        multiDexEnabled true
+    }
 }
 
 dependencies {
