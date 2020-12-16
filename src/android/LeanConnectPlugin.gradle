@@ -5,6 +5,6 @@ android {
 }
 
 dependencies {
-   compile(name:'leanConnectInterfaceLib-debug', ext:'aar')
-   compile(name:'leanConnectLibForServices-debug', ext:'aar')
+   implementation(name:'leanConnectInterfaceLib-debug', ext:'aar')
+   implementation(name:'leanConnectLibForServices-debug', ext:'aar')
 }
