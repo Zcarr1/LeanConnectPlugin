@@ -27,7 +27,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private LeanConnectInterface leanConnectInterface;
 
     @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
@@ -54,7 +54,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             return true;
         }
 
-        /*this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
+        this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
             @Override
             public void onGetLogicalReadersResponse(String[] strings, String s) {
                 try {
@@ -100,7 +100,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             public void onInitialized() {
                 //callbackContext.success();
             }
-        });*/
+        });
 
         return false;
     }
