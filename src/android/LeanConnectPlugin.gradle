@@ -1,0 +1,4 @@
+dependencies {
+   api(name:'leanConnectInterfaceLib-debug', ext:'aar')
+   api(name:'leanConnectLibForServices-debug', ext:'aar')
+}
