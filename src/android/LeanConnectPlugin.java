@@ -51,6 +51,55 @@ public class LeanConnectPlugin
             this.getLogicalReaders(callbackContext);
             return true;
         }
+
+        this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
+            @Override
+            public void onGetLogicalReadersResponse(String[] strings, String s) {
+                try {
+                    String jsonString = new JSONObject()
+                                    .put("logicalReaders", new JSONArray(strings))
+                                    .put("errorMsg", s)
+                                    .toString();
+                    callbackContext.success(jsonString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onGetTagResponse(String s, String s1, int i) {
+                try {
+                    String jsonString = new JSONObject()
+                                    .put("uid", s)
+                                    .put("tagType", s1)
+                                    .put("error", i)
+                                    .toString();
+                    callbackContext.success(jsonString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }    
+            }
+        });
+
+        this.leanConnectInterface.setOnConnectionListener(new LeanConnectInterface.OnConnectionListener() {
+            @Override
+            public void onConnectionCompleted() {
+                callbackContext.success();
+            }
+
+            @Override
+            public void onDisconnectionCompleted() {
+                callbackContext.success();
+            }
+
+            @Override
+            public void onInitialized() {
+                //callbackContext.success();
+            }
+        });
+
         return false;
     }
 
@@ -66,10 +115,9 @@ public class LeanConnectPlugin
     }
 
     private void connect(CallbackContext callbackContext) {
-        boolean res = false;
         try {
-            res = leanConnectInterface.connect();
-            callbackContext.success(res);
+            leanConnectInterface.connect();
+            //callbackContext.success(res);
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
@@ -79,7 +127,7 @@ public class LeanConnectPlugin
     private void disconnect(CallbackContext callbackContext) {
         try {
             leanConnectInterface.disconnect();
-            callbackContext.success();
+            //callbackContext.success();
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
@@ -91,7 +139,7 @@ public class LeanConnectPlugin
         try {
             arg0 = args.getString(0);
             leanConnectInterface.getTag(arg0);
-            callbackContext.success();
+            //callbackContext.success();
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error("Tag name is undefined");
@@ -109,42 +157,12 @@ public class LeanConnectPlugin
     }
 
     private void getLogicalReaders(CallbackContext callbackContext) {
-        String[] res;
         try {
-            res = leanConnectInterface.getLogicalReaders();
-            callbackContext.success(res);
+            leanConnectInterface.getLogicalReaders();
+            //callbackContext.success(res);
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
         }
     }
-
-    private LeanConnectInterface.OnCommandResponseListener lCommandResponseListener = new LeanConnectInterface.OnCommandResponseListener() {
-        @Override
-        public void onGetLogicalReadersResponse(String[] strings, String s) {
-            
-        }
-
-        @Override
-        public void onGetTagResponse(String s, String s1, int i) {
-
-        }
-    };
-
-    private LeanConnectInterface.OnConnectionListener lConnectionListener = new LeanConnectInterface.OnConnectionListener() {
-        @Override
-        public void onConnectionCompleted() {
-            
-        }
-
-        @Override
-        public void onDisconnectionCompleted() {
-
-        }
-
-        @Override
-        public void onInitialized() {
-
-        }
-    };
 }
