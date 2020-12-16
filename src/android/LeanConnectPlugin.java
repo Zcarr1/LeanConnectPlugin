@@ -27,7 +27,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private LeanConnectInterface leanConnectInterface;
 
     @Override
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
