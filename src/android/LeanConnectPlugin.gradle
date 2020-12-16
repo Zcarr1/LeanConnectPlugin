@@ -1,4 +1,11 @@
+android {
+   defaultConfig {
+      multiDexEnabled true
+   }
+}
+
 dependencies {
+   compile 'com.android.support:multidex:1.0.0'
    compile(name:'leanConnectInterfaceLib-debug', ext:'aar')
    compile(name:'leanConnectLibForServices-debug', ext:'aar')
 }
