@@ -1,19 +1,11 @@
-buildscript {
-  repositories {
-    jcenter()
-  }
-  
-  dependencies {
-    classpath 'com.android.tools.build:gradle:4.1.1'
-  }
-}
-
 android {
   compileSdkVersion 29
   buildToolsVersion '29.0.2'
 
-  dexOptions {
-    incremental true
+  defaultConfig {
+    jackOptions {
+      enabled true
+    }
   }
 
   compileOptions {
