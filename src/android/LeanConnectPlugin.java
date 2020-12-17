@@ -99,7 +99,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             return true;
         } else if (action.equals(GET_LOGICAL_READERS)) {
             this.getLogicalReaders(callbackContext);
-            return true;
+            //return true;
         }
 
         return false;
