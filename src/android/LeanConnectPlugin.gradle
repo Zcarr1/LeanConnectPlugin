@@ -1,21 +1,9 @@
 buildscript {
   repositories {
-    mavenCentral()
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:4.1.1'
-  }
-}
-
-allprojects {
-  repositories {
-    mavenCentral()
-    google()
-    jcenter()
-    flatDir {
-        dirs 'src/main/libs'
-    }
+    classpath 'com.android.tools.build:gradle:3.0.1'
   }
 }
 
@@ -26,6 +14,15 @@ task clean(type: Delete) {
 android {
   compileSdkVersion 29
   buildToolsVersion '29.0.2'
+
+  defaultConfig {
+        minSdkVersion 22
+        targetSdkVersion 29
+        versionCode 2
+        versionName '0.2'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
 
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
