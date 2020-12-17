@@ -31,28 +31,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        //this.leanConnectInterface.setOnConnectionListener(this);
-        //this.leanConnectInterface.setOnCommandResponseListener(this);
-
-        if (action.equals(IS_CONNECTED)) {
-            this.isConnected(callbackContext);
-            return true;
-        } else if (action.equals(CONNECT)) {
-            this.connect(callbackContext);
-            return true;
-        } else if (action.equals(DISCONNECT)) {
-            this.disconnect(callbackContext);
-            return true;
-        } else if (action.equals(GET_TAG)) {
-            this.getTag(args, callbackContext);
-            return true;
-        } else if (action.equals(HELLO)) {
-            this.hello(callbackContext);
-            return true;
-        } else if (action.equals(GET_LOGICAL_READERS)) {
-            this.getLogicalReaders(callbackContext);
-            return true;
-        }
 
         this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
             @Override
@@ -101,6 +79,26 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 //callbackContext.success();
             }
         });
+
+        if (action.equals(IS_CONNECTED)) {
+            this.isConnected(callbackContext);
+            return true;
+        } else if (action.equals(CONNECT)) {
+            this.connect(callbackContext);
+            return true;
+        } else if (action.equals(DISCONNECT)) {
+            this.disconnect(callbackContext);
+            return true;
+        } else if (action.equals(GET_TAG)) {
+            this.getTag(args, callbackContext);
+            return true;
+        } else if (action.equals(HELLO)) {
+            this.hello(callbackContext);
+            return true;
+        } else if (action.equals(GET_LOGICAL_READERS)) {
+            this.getLogicalReaders(callbackContext);
+            return true;
+        }
 
         return false;
     }
