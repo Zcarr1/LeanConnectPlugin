@@ -33,7 +33,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         //this.callbackContext = callbackContext;
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        this.addOnCommandResponseListener(callbackContext);
+        //this.addOnCommandResponseListener(callbackContext);
 
         if (action.equals(IS_CONNECTED)) {
             this.isConnected(callbackContext);
@@ -122,7 +122,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
-    private void addOnCommandResponseListener(final CallbackContext callbackContext) {
+    /*private void addOnCommandResponseListener(final CallbackContext callbackContext) {
         this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
             @Override
             public void onGetLogicalReadersResponse(String[] strings, String s) {
@@ -161,5 +161,5 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 }    
             }
         });
-    }
+    }*/
 }
