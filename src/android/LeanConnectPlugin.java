@@ -33,7 +33,40 @@ public class LeanConnectPlugin extends CordovaPlugin {
         this.callbackContext = callbackContext;
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        addOnCommandResponseListener();
+
+        this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
+            @Override
+            public void onGetLogicalReadersResponse(String[] strings, String s) {
+                String[] readers = (strings != null) ? strings : new String[0];
+                
+                try {
+                    String jsonString = new JSONObject()
+                                    .put("logicalReaders", new JSONArray(logicalReaders))
+                                    .put("errorMsg", errorMsg)
+                                    .toString();
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
+                    result.setKeepCallback(true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }
+            }
+        
+            @Override
+            public void onGetTagResponse(String s, String s1, int i) {
+                try {
+                    String jsonString = new JSONObject()
+                                    .put("uid", s)
+                                    .put("tagType", s1)
+                                    .put("error", i)
+                                    .toString();
+                    callbackContext.success(jsonString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }    
+            }
+        });
 
         if (action.equals(IS_CONNECTED)) {
             this.isConnected(callbackContext);
@@ -120,43 +153,5 @@ public class LeanConnectPlugin extends CordovaPlugin {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
         }
-    }
-
-    private void addOnCommandResponseListener() {
-        this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
-            @Override
-            public void onGetLogicalReadersResponse(String[] strings, String s) {
-                String[] readers = (strings != null) ? strings : new String[0];
-                
-                try {
-                    String jsonString = new JSONObject()
-                                    .put("logicalReaders", new JSONArray(logicalReaders))
-                                    .put("errorMsg", errorMsg)
-                                    .toString();
-                    PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
-                    result.setKeepCallback(true);
-                    this.callbackContext.sendPluginResult(result);
-                    callbackContext.success(jsonString);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    callbackContext.error(e.getMessage());
-                }
-            }
-        
-            @Override
-            public void onGetTagResponse(String s, String s1, int i) {
-                try {
-                    String jsonString = new JSONObject()
-                                    .put("uid", s)
-                                    .put("tagType", s1)
-                                    .put("error", i)
-                                    .toString();
-                    callbackContext.success(jsonString);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    callbackContext.error(e.getMessage());
-                }    
-            }
-        });
     }
 }
