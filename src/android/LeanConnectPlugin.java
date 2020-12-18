@@ -33,7 +33,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         //this.callbackContext = callbackContext;
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        this.addOnCommandResponseListener();
+        //this.addOnCommandResponseListener();
 
         if (action.equals(IS_CONNECTED)) {
             this.isConnected(callbackContext);
