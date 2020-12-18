@@ -41,30 +41,21 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 
                 try {
                     String jsonString = new JSONObject()
-                                    .put("logicalReaders", new JSONArray(logicalReaders))
-                                    .put("errorMsg", errorMsg)
+                                    .put("logicalReaders", new JSONArray(strings))
+                                    .put("errorMsg", s)
                                     .toString();
                     PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
                     result.setKeepCallback(true);
+                    callbackContext.sendPluginResult(result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     callbackContext.error(e.getMessage());
                 }
             }
-        
+
             @Override
             public void onGetTagResponse(String s, String s1, int i) {
-                try {
-                    String jsonString = new JSONObject()
-                                    .put("uid", s)
-                                    .put("tagType", s1)
-                                    .put("error", i)
-                                    .toString();
-                    callbackContext.success(jsonString);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    callbackContext.error(e.getMessage());
-                }    
+
             }
         });
 
