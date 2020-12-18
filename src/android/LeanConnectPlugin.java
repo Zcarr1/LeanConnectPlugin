@@ -54,7 +54,11 @@ public class LeanConnectPlugin extends CordovaPlugin {
         } else if (action.equals(GET_LOGICAL_READERS)) {
             this.getLogicalReaders(callbackContext);
             while(!actionFinished) {
-                lockObj.wait();
+                try {
+                    lockObj.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             return true;
         }
