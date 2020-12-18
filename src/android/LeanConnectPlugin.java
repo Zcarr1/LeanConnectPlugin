@@ -40,14 +40,18 @@ public class LeanConnectPlugin extends CordovaPlugin {
             @Override
             public void onGetLogicalReadersResponse(String[] strings, String s) {
                 String[] readers = (strings != null) ? strings : new String[0];
-
+                
                 try {
                     String jsonString = new JSONObject()
                                     .put("logicalReaders", new JSONArray(readers))
                                     .put("errorMsg", s)
                                     .toString();
                     actionFinished = true;
-                    lockObj.notify();
+                    try {
+                        lockObj.notify();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     callbackContext.success(jsonString);
                 } catch (JSONException e) {
                     e.printStackTrace();
