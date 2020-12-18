@@ -1,5 +1,8 @@
 package info.androidabcd.plugins.leanconnect;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
