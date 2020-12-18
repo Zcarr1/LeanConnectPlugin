@@ -15,9 +15,7 @@ import hsc.com.leanconnectlibforservices.LeanConnectMobile;
 /**
  * This class echoes a string called from JavaScript.
  */
-public abstract class LeanConnectPlugin 
-        extends CordovaPlugin 
-        implements LeanConnectInterface.OnCommandResponseListener, LeanConnectInterface.OnConnectionListener {
+public class LeanConnectPlugin extends CordovaPlugin {
 
     private static final String IS_CONNECTED = "isConnected";
     private static final String CONNECT = "connect";
@@ -35,8 +33,7 @@ public abstract class LeanConnectPlugin
         this.callbackContext = callbackContext;
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        this.leanConnectInterface.setOnConnectionListener(this);
-        this.leanConnectInterface.setOnCommandResponseListener(this);
+        this.addOnCommandResponseListener();
 
         if (action.equals(IS_CONNECTED)) {
             this.isConnected(callbackContext);
@@ -125,40 +122,44 @@ public abstract class LeanConnectPlugin
         }
     }
 
-    @Override
-    public void onGetLogicalReadersResponse(String[] logicalReaders, String errorMsg) {
-        String[] readers = (strings != null) ? strings : new String[0];
-
-        cordova.getActivity().runOnUiThread(new Runnable() {
-            public void run(){
+    private void addOnCommandResponseListener() {
+        this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
+            @Override
+            public void onGetLogicalReadersResponse(String[] strings, String s) {
+                String[] readers = (strings != null) ? strings : new String[0];
+                
+                cordova.getActivity().runOnUiThread(new Runnable() {
+                    public void run(){
+                        try {
+                            String jsonString = new JSONObject()
+                                            .put("logicalReaders", new JSONArray(logicalReaders))
+                                            .put("errorMsg", errorMsg)
+                                            .toString();
+                            PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
+                            result.setKeepCallback(false);
+                            callbackContext.sendPluginResult(result);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callbackContext.error(e.getMessage());
+                        }
+                    }
+                });
+            }
+        
+            @Override
+            public void onGetTagResponse(String s, String s1, int i) {
                 try {
                     String jsonString = new JSONObject()
-                                    .put("logicalReaders", new JSONArray(logicalReaders))
-                                    .put("errorMsg", errorMsg)
+                                    .put("uid", s)
+                                    .put("tagType", s1)
+                                    .put("error", i)
                                     .toString();
-                    PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
-                    result.setKeepCallback(false);
-                    callbackContext.sendPluginResult(result);
+                    callbackContext.success(jsonString);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     callbackContext.error(e.getMessage());
-                }
+                }    
             }
         });
     }
-
-    /*@Override
-    public void onGetTagResponse(String s, String s1, int i) {
-        try {
-            String jsonString = new JSONObject()
-                            .put("uid", s)
-                            .put("tagType", s1)
-                            .put("error", i)
-                            .toString();
-            callbackContext.success(jsonString);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            callbackContext.error(e.getMessage());
-        }    
-    }*/
 }
