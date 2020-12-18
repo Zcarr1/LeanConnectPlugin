@@ -122,7 +122,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
-    private void addOnCommandResponseListener() {
+    /*private void addOnCommandResponseListener() {
         this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
             @Override
             public void onGetLogicalReadersResponse(String[] strings, String s) {
@@ -133,9 +133,9 @@ public class LeanConnectPlugin extends CordovaPlugin {
                                     .put("logicalReaders", new JSONArray(logicalReaders))
                                     .put("errorMsg", errorMsg)
                                     .toString();
-                    /*PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
                     result.setKeepCallback(true);
-                    this.callbackContext.sendPluginResult(result);*/
+                    this.callbackContext.sendPluginResult(result);
                     callbackContext.success(jsonString);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -158,5 +158,5 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 }    
             }
         });
-    }
+    }*/
 }
