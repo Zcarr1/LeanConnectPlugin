@@ -26,8 +26,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private Object lockObj;
     private boolean actionFinished;
-
-
     private LeanConnectInterface leanConnectInterface;
 
     @Override
@@ -35,7 +33,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        this.addOnConnectionListener(callbackContext);
+        this.addOnCommandResponseListener(callbackContext);
         this.actionFinished = false;
 
         if (action.equals(IS_CONNECTED)) {
