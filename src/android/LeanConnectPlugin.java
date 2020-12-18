@@ -131,7 +131,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 
                 try {
                     String jsonString = new JSONObject()
-                                    .put("logicalReaders", new JSONArray(strings))
+                                    .put("logicalReaders", new JSONArray(Arrays.asList(strings)))
                                     .put("errorMsg", s)
                                     .toString();
                     PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
