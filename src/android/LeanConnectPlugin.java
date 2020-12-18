@@ -33,7 +33,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        this.actionFinished = false;
+        lockObj = new Object();
+        actionFinished = false;
 
         this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
             @Override
@@ -45,8 +46,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
                                     .put("logicalReaders", new JSONArray(readers))
                                     .put("errorMsg", s)
                                     .toString();
-                    this.actionFinished = true;
-                    this.lockObj.notify();
+                    actionFinished = true;
+                    lockObj.notify();
                     callbackContext.success(jsonString);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -106,7 +107,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             this.getLogicalReaders(callbackContext);
             while(!actionFinished) {
                 try {
-                    this.lockObj.wait();
+                    lockObj.wait();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
