@@ -34,7 +34,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
         this.addOnCommandResponseListener(callbackContext);
-        this.actionFinished = false;
+        actionFinished = false;
 
         if (action.equals(IS_CONNECTED)) {
             this.isConnected(callbackContext);
@@ -53,8 +53,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
             return true;
         } else if (action.equals(GET_LOGICAL_READERS)) {
             this.getLogicalReaders(callbackContext);
-            while(!this.actionFinished) {
-                this.lockObj.wait();
+            while(!actionFinished) {
+                lockObj.wait();
             }
             return true;
         }
