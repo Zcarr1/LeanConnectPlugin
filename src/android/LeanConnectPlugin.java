@@ -15,9 +15,9 @@ import hsc.com.leanconnectlibforservices.LeanConnectMobile;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class LeanConnectPlugin 
+public abstract class LeanConnectPlugin 
         extends CordovaPlugin 
-        implements LeanConnectInterface.OnCommandResponseListener, LeanConnectInterface.OnConnectionListener{
+        implements LeanConnectInterface.OnCommandResponseListener, LeanConnectInterface.OnConnectionListener {
 
     private static final String IS_CONNECTED = "isConnected";
     private static final String CONNECT = "connect";
