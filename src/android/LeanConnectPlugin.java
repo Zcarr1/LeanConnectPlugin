@@ -130,11 +130,15 @@ public class LeanConnectPlugin extends CordovaPlugin {
         this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
             @Override
             public void onGetLogicalReadersResponse(String[] strings, String s) {
-                String[] readers = (strings != null) ? strings : new String[0];
+                String[] readers = strings;
+
+                if (readers == null) {
+                    readers = new String[0];
+                }
                 
                 try {
                     String jsonString = new JSONObject()
-                                    .put("logicalReaders", new JSONArray(Arrays.asList(strings)))
+                                    .put("logicalReaders", new JSONArray(Arrays.asList(readers)))
                                     .put("errorMsg", s)
                                     .toString();
                     PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
