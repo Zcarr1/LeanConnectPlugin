@@ -33,8 +33,59 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        this.addOnCommandResponseListener(callbackContext);
-        actionFinished = false;
+        this.actionFinished = false;
+
+        this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
+            @Override
+            public void onGetLogicalReadersResponse(String[] strings, String s) {
+                String[] readers = (strings != null) ? strings : new String[0];
+
+                try {
+                    String jsonString = new JSONObject()
+                                    .put("logicalReaders", new JSONArray(readers))
+                                    .put("errorMsg", s)
+                                    .toString();
+                    this.actionFinished = true;
+                    this.lockObj.notify();
+                    callbackContext.success(jsonString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onGetTagResponse(String s, String s1, int i) {
+                try {
+                    String jsonString = new JSONObject()
+                                    .put("uid", s)
+                                    .put("tagType", s1)
+                                    .put("error", i)
+                                    .toString();
+                    callbackContext.success(jsonString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }    
+            }
+        });
+
+        this.leanConnectInterface.setOnConnectionListener(new LeanConnectInterface.OnConnectionListener() {
+            @Override
+            public void onConnectionCompleted() {
+                callbackContext.success();
+            }
+
+            @Override
+            public void onDisconnectionCompleted() {
+                callbackContext.success();
+            }
+
+            @Override
+            public void onInitialized() {
+                //callbackContext.success();
+            }
+        });
 
         if (action.equals(IS_CONNECTED)) {
             this.isConnected(callbackContext);
@@ -55,8 +106,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
             this.getLogicalReaders(callbackContext);
             while(!actionFinished) {
                 try {
-                    lockObj.wait();
-                } catch (InterruptedException e) {
+                    this.lockObj.wait();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -128,61 +179,5 @@ public class LeanConnectPlugin extends CordovaPlugin {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
         }
-    }
-
-    private void addOnCommandResponseListener (final CallbackContext callbackContext) {
-        this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
-            @Override
-            public void onGetLogicalReadersResponse(String[] strings, String s) {
-                String[] readers = (strings != null) ? strings : new String[0];
-
-                try {
-                    String jsonString = new JSONObject()
-                                    .put("logicalReaders", new JSONArray(readers))
-                                    .put("errorMsg", s)
-                                    .toString();
-                    actionFinished = true;
-                    lockObj.notify();
-                    callbackContext.success(jsonString);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    callbackContext.error(e.getMessage());
-                }
-            }
-
-            @Override
-            public void onGetTagResponse(String s, String s1, int i) {
-                try {
-                    String jsonString = new JSONObject()
-                                    .put("uid", s)
-                                    .put("tagType", s1)
-                                    .put("error", i)
-                                    .toString();
-                    callbackContext.success(jsonString);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    callbackContext.error(e.getMessage());
-                }    
-            }
-        });
-    }
-    
-    private void addOnConnectionListener(final CallbackContext callbackContext) {
-        this.leanConnectInterface.setOnConnectionListener(new LeanConnectInterface.OnConnectionListener() {
-            @Override
-            public void onConnectionCompleted() {
-                callbackContext.success();
-            }
-
-            @Override
-            public void onDisconnectionCompleted() {
-                callbackContext.success();
-            }
-
-            @Override
-            public void onInitialized() {
-                //callbackContext.success();
-            }
-        });
     }
 }
