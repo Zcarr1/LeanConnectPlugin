@@ -137,8 +137,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
                                     .put("logicalReaders", new JSONArray(readers))
                                     .put("errorMsg", s)
                                     .toString();
-                    this.actionFinished = true;
-                    this.lockObj.notify();
+                    actionFinished = true;
+                    lockObj.notify();
                     callbackContext.success(jsonString);
                 } catch (JSONException e) {
                     e.printStackTrace();
