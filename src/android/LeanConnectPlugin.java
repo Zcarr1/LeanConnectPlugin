@@ -33,7 +33,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         this.callbackContext = callbackContext;
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        this.addOnCommandResponseListener(callbackContext);
+        this.addOnCommandResponseListener();
 
         if (action.equals(IS_CONNECTED)) {
             this.isConnected(callbackContext);
@@ -128,22 +128,18 @@ public class LeanConnectPlugin extends CordovaPlugin {
             public void onGetLogicalReadersResponse(String[] strings, String s) {
                 String[] readers = (strings != null) ? strings : new String[0];
                 
-                cordova.getActivity().runOnUiThread(new Runnable() {
-                    public void run(){
-                        try {
-                            String jsonString = new JSONObject()
-                                            .put("logicalReaders", new JSONArray(logicalReaders))
-                                            .put("errorMsg", errorMsg)
-                                            .toString();
-                            PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
-                            result.setKeepCallback(false);
-                            callbackContext.sendPluginResult(result);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            callbackContext.error(e.getMessage());
-                        }
-                    }
-                });
+                try {
+                    String jsonString = new JSONObject()
+                                    .put("logicalReaders", new JSONArray(logicalReaders))
+                                    .put("errorMsg", errorMsg)
+                                    .toString();
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
+                    result.setKeepCallback(true);
+                    callbackContext.sendPluginResult(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }
             }
         
             @Override
