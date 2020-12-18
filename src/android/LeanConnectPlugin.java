@@ -25,15 +25,15 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private static final String GET_LOGICAL_READERS = "getLogicalReaders";
 
     private LeanConnectInterface leanConnectInterface;
-    //private CallbackContext callbackContext;
+    private CallbackContext callbackContext;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-        //this.callbackContext = callbackContext;
+        this.callbackContext = callbackContext;
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        //this.addOnCommandResponseListener();
+        addOnCommandResponseListener();
 
         if (action.equals(IS_CONNECTED)) {
             this.isConnected(callbackContext);
@@ -122,7 +122,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
-    /*private void addOnCommandResponseListener() {
+    private void addOnCommandResponseListener() {
         this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
             @Override
             public void onGetLogicalReadersResponse(String[] strings, String s) {
@@ -158,5 +158,5 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 }    
             }
         });
-    }*/
+    }
 }
