@@ -37,8 +37,9 @@ public class LeanConnectPlugin extends CordovaPlugin {
         boolean result = false;
 
         if (action.equals(IS_CONNECTED)) {
-            result = true;
+            //result = true;
             this.isConnected(callbackContext);
+            return true;
         } else if (action.equals(CONNECT)) {
             result = true;
             this.connect(callbackContext);
@@ -74,7 +75,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private void connect(CallbackContext callbackContext) {
         try {
             leanConnectInterface.connect();
-            //callbackContext.success(res);
+            //callbackContext.success();
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
