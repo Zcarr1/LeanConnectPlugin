@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.PluginResult;
+import org.apache.cordova.PluginResult.Status;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,8 +65,9 @@ public class LeanConnectPlugin extends CordovaPlugin {
         boolean res = false;
         try {
             res = leanConnectInterface.isConnected();
-            String str = String.valueOf(res);
-            callbackContext.success(str);
+            PluginResult result = new PluginResult(PluginResult.Status.OK, res);
+            result.setKeepCallback(false);
+            callbackContext.sendPluginResult(result);
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
