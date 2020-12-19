@@ -29,37 +29,35 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private static final String GET_LOGICAL_READERS = "getLogicalReaders";
 
     private LeanConnectInterface leanConnectInterface;
-    private CallbackContext callbackContext = null;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-
-        this.callbackContext = callbackContext;
         Context context = this.cordova.getActivity().getApplicationContext();
         this.leanConnectInterface = new LeanConnectMobile(context);
-        this.addOnCommandResponseListener();
+        
+        boolean result = false;
 
         if (action.equals(IS_CONNECTED)) {
+            result = true;
             this.isConnected(callbackContext);
-            return true;
         } else if (action.equals(CONNECT)) {
+            result = true;
             this.connect(callbackContext);
-            return true;
         } else if (action.equals(DISCONNECT)) {
+            result = true;
             this.disconnect(callbackContext);
-            return true;
         } else if (action.equals(GET_TAG)) {
+            result = true;
             this.getTag(args, callbackContext);
-            return true;
         } else if (action.equals(HELLO)) {
+            result = true;
             this.hello(callbackContext);
-            return true;
         } else if (action.equals(GET_LOGICAL_READERS)) {
+            result = true;
             this.getLogicalReaders(callbackContext);
-            return true;
         }
 
-        return false;
+        return result;
     }
 
     private void isConnected(CallbackContext callbackContext) {
@@ -116,44 +114,40 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
-    private void getLogicalReaders(CallbackContext callbackContext) {
+    private void getLogicalReaders(final CallbackContext callbackContext) {
         try {
+            this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
+                @Override
+                public void onGetLogicalReadersResponse(String[] strings, String s) {
+                    String[] readers = strings;
+    
+                    if (readers == null) {
+                        readers = new String[0];
+                    }
+                    
+                    try {
+                        String jsonString = new JSONObject()
+                                        .put("logicalReaders", new JSONArray(Arrays.asList(readers)))
+                                        .put("errorMsg", s)
+                                        .toString();
+                        //PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
+                        //result.setKeepCallback(true);
+
+                        callbackContext.success(jsonString);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        callbackContext.error(e.getMessage());
+                    }
+                }
+    
+                @Override
+                public void onGetTagResponse(String s, String s1, int i) {}
+            });
+
             leanConnectInterface.getLogicalReaders();
-            //callbackContext.success(res);
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
         }
-    }
-
-    private void addOnCommandResponseListener() {
-        this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
-            @Override
-            public void onGetLogicalReadersResponse(String[] strings, String s) {
-                String[] readers = strings;
-
-                if (readers == null) {
-                    readers = new String[0];
-                }
-                
-                try {
-                    String jsonString = new JSONObject()
-                                    .put("logicalReaders", new JSONArray(Arrays.asList(readers)))
-                                    .put("errorMsg", s)
-                                    .toString();
-                    PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
-                    result.setKeepCallback(true);
-                    callbackContext.sendPluginResult(result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    callbackContext.error(e.getMessage());
-                }
-            }
-
-            @Override
-            public void onGetTagResponse(String s, String s1, int i) {
-
-            }
-        });
-    }
+    }}
 }
