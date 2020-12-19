@@ -129,9 +129,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
                                         .put("logicalReaders", new JSONArray(Arrays.asList(readers)))
                                         .put("errorMsg", s)
                                         .toString();
-                        //PluginResult result = new PluginResult(PluginResult.Status.OK, jsonString);
-                        //result.setKeepCallback(true);
-
                         callbackContext.success(jsonString);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -148,5 +145,5 @@ public class LeanConnectPlugin extends CordovaPlugin {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
         }
-    }}
+    }
 }
