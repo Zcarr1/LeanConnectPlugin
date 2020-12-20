@@ -70,12 +70,12 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
-    private void connect(final CallbackContext callbackContext) {
+    private void connect(CallbackContext callbackContext) {
         try {
             this.addOnConnectionListener(callbackContext);
             leanConnectInterface.connect();
         } catch (Exception e) {
-            e.printStackTrace();
+            pippo.printStackTrace();
             callbackContext.error(e.getMessage());
         }
     }
