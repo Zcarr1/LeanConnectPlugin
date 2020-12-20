@@ -36,25 +36,25 @@ public class LeanConnectPlugin extends CordovaPlugin {
         Context context = this.cordova.getActivity().getApplicationContext();
         boolean result = false;
 
-        if (action.equals(IS_CONNECTED)) {
-            result = true;
-            this.isConnected(callbackContext);
-        } else if (action.equals(CONNECT)) {
-            result = true;
+        if (action.equals(CONNECT)) {
             this.leanConnectInterface = new LeanConnectMobile(context);
             this.connect(callbackContext);
+            result = true;
         } else if (action.equals(DISCONNECT)) {
-            result = true;
             this.disconnect(callbackContext);
+            result = true;
+        } else if (action.equals(IS_CONNECTED)) {
+            this.isConnected(callbackContext);
+            result = true;
         } else if (action.equals(GET_TAG)) {
-            result = true;
             this.getTag(args, callbackContext);
+            result = true;
         } else if (action.equals(HELLO)) {
-            result = true;
             this.hello(callbackContext);
-        } else if (action.equals(GET_LOGICAL_READERS)) {
             result = true;
+        } else if (action.equals(GET_LOGICAL_READERS)) {
             this.getLogicalReaders(callbackContext);
+            result = true;
         }
 
         return result;
