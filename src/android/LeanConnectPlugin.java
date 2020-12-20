@@ -75,7 +75,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             this.addOnConnectionListener(callbackContext);
             leanConnectInterface.connect();
         } catch (Exception e) {
-            pippo.printStackTrace();
+            e.printStackTrace();
             callbackContext.error(e.getMessage());
         }
     }
