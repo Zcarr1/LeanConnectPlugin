@@ -74,7 +74,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void connect(final CallbackContext callbackContext) {
         try {
-            leanConnectInterface.setOnConnectionListener(new LeanConnectInterface.OnConnectionListener() {
+            /*leanConnectInterface.setOnConnectionListener(new LeanConnectInterface.OnConnectionListener() {
                 @Override
                 public void onConnectionCompleted() {
                     callbackContext.success();
@@ -85,7 +85,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
     
                 @Override
                 public void onInitialized() {}
-            });
+            });*/
 
             leanConnectInterface.connect();
         } catch (Exception e) {
