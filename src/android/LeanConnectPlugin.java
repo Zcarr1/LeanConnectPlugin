@@ -141,16 +141,16 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private void addOnCommandResponseListener(final CallbackContext callbackContext) {
         this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
             @Override
-            public void onGetLogicalReadersResponse(String[] strings, String s) {
+            public void onGetLogicalReadersResponse(String[] logicalReaders, String errorMsg) {
                 try {
                     JSONArray readers = new JSONArray();
-                    for (int i = 0; i < strings.length; i++) {
-                        readers.put(strings[i]);
+                    for (int i = 0; i < logicalReaders.length; i++) {
+                        readers.put(logicalReaders[i]);
                     }
 
                     String jsonString = new JSONObject()
                                     .put("logicalReaders", readers)
-                                    .put("errorMsg", s)
+                                    .put("errorMsg", errorMsg)
                                     .toString();
                     callbackContext.success(jsonString);
                 } catch (Exception e) {
@@ -160,12 +160,12 @@ public class LeanConnectPlugin extends CordovaPlugin {
             }
 
             @Override
-            public void onGetTagResponse(String s, String s1, int i) {
+            public void onGetTagResponse(String uid, String tagType, int error) {
                 try {
                     String jsonString = new JSONObject()
-                                    .put("uid", s)
-                                    .put("tagType", s1)
-                                    .put("error", i)
+                                    .put("uid", uid)
+                                    .put("tagType", tagType)
+                                    .put("error", error)
                                     .toString();
                     callbackContext.success(jsonString);
                 } catch (Exception e) {
