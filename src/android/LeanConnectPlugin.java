@@ -1,8 +1,5 @@
 package info.androidabcd.plugins.leanconnect;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
@@ -148,7 +145,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 try {
                     JSONArray readers = new JSONArray();
                     for (int i = 0; i < strings.length; i++) {
-                        readers.put(myArray[i]);
+                        readers.put(strings[i]);
                     }
 
                     String jsonString = new JSONObject()
