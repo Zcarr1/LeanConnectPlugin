@@ -38,7 +38,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
         if (action.equals(IS_CONNECTED)) {
             result = true;
-            this.leanConnectInterface = new LeanConnectMobile(context);
+            leanConnectInterface = new LeanConnectMobile(context);
             this.isConnected(callbackContext);
         } else if (action.equals(CONNECT)) {
             result = true;
