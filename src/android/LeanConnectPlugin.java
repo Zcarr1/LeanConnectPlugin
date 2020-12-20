@@ -111,7 +111,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
-    private void getLogicalReaders(final CallbackContext callbackContext) {
+    private void getLogicalReaders(CallbackContext callbackContext) {
         try {
             this.addOnCommandResponseListener(callbackContext);
             leanConnectInterface.getLogicalReaders();
