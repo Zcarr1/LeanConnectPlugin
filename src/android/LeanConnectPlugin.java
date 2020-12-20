@@ -96,7 +96,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
         try {
             this.addOnCommandResponseListener(callbackContext);
             String arg0 = args.getString(0);
-            Log.d("READERS", arg0);
             leanConnectInterface.getTag(arg0);
         } catch (Exception e) {
             e.printStackTrace();
