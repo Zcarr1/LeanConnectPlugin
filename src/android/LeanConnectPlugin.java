@@ -36,8 +36,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
         if (action.equals(CONNECT)) {
             this.leanConnectInterface = new LeanConnectMobile(context);
-            this.addOnConnectionListener(callbackContext);
-            this.addOnCommandResponseListener(callbackContext);
             this.connect(callbackContext);
             result = true;
         } else if (action.equals(DISCONNECT)) {
@@ -74,7 +72,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void connect(final CallbackContext callbackContext) {
         try {
-            //this.addOnConnectionListener(callbackContext);
+            this.addOnConnectionListener(callbackContext);
             leanConnectInterface.connect();
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,7 +82,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void disconnect(CallbackContext callbackContext) {
         try {
-            //this.addOnConnectionListener(callbackContext);
+            this.addOnConnectionListener(callbackContext);
             leanConnectInterface.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,7 +92,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void getTag(JSONArray args, CallbackContext callbackContext) {
         try {
-            //this.addOnCommandResponseListener(callbackContext);
+            this.addOnCommandResponseListener(callbackContext);
             String arg0 = args.getString(0);
             leanConnectInterface.getTag(arg0);
         } catch (Exception e) {
@@ -115,7 +113,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void getLogicalReaders(final CallbackContext callbackContext) {
         try {
-            //this.addOnCommandResponseListener(callbackContext);
+            this.addOnCommandResponseListener(callbackContext);
             leanConnectInterface.getLogicalReaders();
         } catch (Exception e) {
             e.printStackTrace();
