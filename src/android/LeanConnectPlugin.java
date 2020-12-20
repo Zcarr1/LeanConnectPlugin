@@ -62,7 +62,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
     }
 
     private void isConnected(CallbackContext callbackContext) {
-        boolean res = true;
+        boolean res = false;
         try {
             res = leanConnectInterface.isConnected();
             PluginResult result = new PluginResult(PluginResult.Status.OK, res);
