@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 
 import hsc.com.leanConnectInterfaceLib.LeanConnectInterface;
 import hsc.com.leanconnectlibforservices.LeanConnectMobile;
@@ -92,10 +93,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
     }
 
     private void getTag(JSONArray args, CallbackContext callbackContext) {
-        String arg0 = "";
         try {
             this.addOnCommandResponseListener(callbackContext);
-            arg0 = args.getString(0);
+            String arg0 = args.getString(0);
+            Log.d("READERS", arg0);
             leanConnectInterface.getTag(arg0);
         } catch (Exception e) {
             e.printStackTrace();
