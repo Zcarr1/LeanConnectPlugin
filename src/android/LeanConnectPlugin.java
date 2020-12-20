@@ -83,6 +83,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void disconnect(CallbackContext callbackContext) {
         try {
+            this.addOnConnectionListener(callbackContext);
             leanConnectInterface.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,6 +94,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private void getTag(JSONArray args, CallbackContext callbackContext) {
         String arg0 = "";
         try {
+            this.addOnCommandResponseListener(callbackContext);
             arg0 = args.getString(0);
             leanConnectInterface.getTag(arg0);
         } catch (Exception e) {
