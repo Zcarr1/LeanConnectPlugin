@@ -145,6 +145,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             @Override
             public void onGetLogicalReadersResponse(String[] logicalReaders, String errorMsg) {
                 try {
+                    if (logicalReaders == null) {
+                        logicalReaders = new String[0];
+                    }
+                    
                     JSONArray readers = new JSONArray();
                     for (int i = 0; i < logicalReaders.length; i++) {
                         readers.put(logicalReaders[i]);
