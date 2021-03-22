@@ -1,6 +1,13 @@
 package info.androidabcd.plugins.leanconnect;
 
 import org.apache.cordova.CordovaPlugin;
+
+import androidx.annotation.NonNull;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Map;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
@@ -32,6 +39,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private static final String SWITCH_NDEF = "switchNdef";
 
     private LeanConnectInterface leanConnectInterface;
+
+    Dictionary<String, Map<String, String>> uuidInfos = null;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -127,7 +136,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             String logicalReader = args.getString(0);
             String domain = args.getString(1);
             String uuid = args.getString(2);
-            String tagType = "";
+            String tagType = getUuidInfoTagType(uuid);
             String xmlReport = args.getString(3);
             leanConnectInterface.readTag(logicalReader, domain, null, null, uuid, tagType, xmlReport);
         } catch (Exception e) {
@@ -162,17 +171,13 @@ public class LeanConnectPlugin extends CordovaPlugin {
             String logicalReader = args.getString(0);
             String domain = args.getString(1);
             String uuid = args.getString(2);
-            String tagType = "";
+            String tagtype = getUuidInfoTagType(uuid);
             int action = args.getInt(3);
-            leanConnectInterface.enableDisableNdef(logicalReader, domain, null, null, uuid, tagType, action);
+            leanConnectInterface.enableDisableNdef(logicalReader, domain, null, null, uuid, tagtype, action);
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
         }
-    }
-
-    private void switchNdef(JSONArray args, CallbackContext callbackContext) {
-        
     }
 
     private void setOnConnectionListener(final CallbackContext callbackContext) {
@@ -218,7 +223,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             }
 
             @Override
-            public void onGetTagResponse(String uid, String tagType, String[] mediaList, int error) {
+            public void onGetTagResponse(String uuid, String tagType, String[] mediaList, int error) {
                 try {
                     mediaList = (mediaList == null) ? new String[0] : mediaList;
 
@@ -228,11 +233,13 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     }
 
                     String response = new JSONObject()
-                                    .put("uid", uid)
+                                    .put("uuid", uuid)
                                     .put("tagType", tagType)
                                     .put("mediaList", media)
                                     .put("error", error)
                                     .toString();
+                    
+                    putUuidInfo(uuid, tagType);
                     callbackContext.success(response);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -241,10 +248,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             }
             
             @Override
-            public void onReadTagResponse(String uid, String xmlReport, int error) {
+            public void onReadTagResponse(String uuid, String xmlReport, int error) {
                 try {
                     String response = new JSONObject()
-                                    .put("uid", uid)
+                                    .put("uuid", uuid)
                                     .put("xmlReport", xmlReport)
                                     .put("error", error)
                                     .toString();
@@ -256,10 +263,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             }
 
             @Override
-            public void onEnableDisableNDefResponse(String uid, int action, int prevStatus, int newStatus, int error) {
+            public void onEnableDisableNDefResponse(String uuid, int action, int prevStatus, int newStatus, int error) {
                 try {
                     String response = new JSONObject()
-                                    .put("uid", uid)
+                                    .put("uuid", uuid)
                                     .put("action", action)
                                     .put("prevStatus", prevStatus)
                                     .put("newStatus", newStatus)
@@ -272,5 +279,27 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 }
             }
         });
+    }
+
+    protected boolean putUuidInfo(@NonNull String uuid, @NonNull String tagtype) {
+        if (uuidInfos == null) uuidInfos = new Hashtable<>();
+        if (uuid.isEmpty()) return false;
+
+        Map<String, String> infos = new Hashtable<>();
+        infos.put("tagtype", tagtype);
+        uuidInfos.put(uuid, infos);
+        return true;
+    }
+
+    protected Map<String, String> getUuidInfo(@NonNull String uuid) {
+        if (uuid.isEmpty()) return null;
+
+        Map<String, String> infos = uuidInfos.get(uuid);
+        return (infos == null ? new Hashtable<>() : infos);
+    }
+
+    protected String getUuidInfoTagType(@NonNull String uuid) {
+        Map<String, String> infos = getUuidInfo(uuid);
+        return (infos == null ? "" : infos.get("tagtype"));
     }
 }
