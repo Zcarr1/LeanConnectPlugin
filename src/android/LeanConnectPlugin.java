@@ -24,8 +24,12 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private static final String CONNECT = "connect";
     private static final String DISCONNECT = "disconnect";
     private static final String GET_TAG = "getTag";
+    private static final String READ_TAG = "readTag";
     private static final String HELLO = "hello";
     private static final String GET_LOGICAL_READERS = "getLogicalReaders";
+    private static final String ENABLENDEF = "enableNdef";
+    private static final String DISABLENDEF = "disableNdef";
+    private static final String SWITCHNDEF = "switchNdef";
 
     private LeanConnectInterface leanConnectInterface;
 
