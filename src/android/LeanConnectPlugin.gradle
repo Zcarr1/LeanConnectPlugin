@@ -34,5 +34,5 @@ dependencies {
   compile 'com.android.support:multidex:1.0.0'
   //compile(name:'leanConnectInterfaceLib-debug', ext:'aar')
   //compile(name:'leanConnectLibForServices-debug', ext:'aar')
-  implementation fileTree(include: ['*.aar'], dir: 'libs')
+  compile fileTree(include: ['*.aar'], dir: 'libs')
 }
