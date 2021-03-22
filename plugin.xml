@@ -14,7 +14,7 @@
 		</config-file>
 		<config-file parent="/*" target="AndroidManifest.xml"></config-file>
 		<source-file src="src/android/LeanConnectPlugin.java" target-dir="src/info/androidabcd/plugins/leanconnect/LeanConnectPlugin" />
-		<framework src="src/android/LeanConnectPlugin.gradle" custom="true" type="gradleReference" />
+		<!--framework src="src/android/LeanConnectPlugin.gradle" custom="true" type="gradleReference" /-->
 		<resource-file src="src/android/libs/leanConnectInterfaceLib-debug.aar" target="libs/leanConnectInterfaceLib-debug.aar" />
 		<resource-file src="src/android/libs/leanConnectLibForServices-debug.aar" target="libs/leanConnectLibForServices-debug.aar" />
 	</platform>
