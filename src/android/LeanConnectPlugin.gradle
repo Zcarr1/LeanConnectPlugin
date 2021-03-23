@@ -24,14 +24,28 @@ android {
     javaMaxHeapSize "4g"
   }*/
 
-  /*compileOptions {
+  compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
-  }*/
+  }
+}
+
+allprojects {
+    repositories {
+        maven {url "https://maven.google.com" }
+        jcenter()
+        flatDir {
+            dirs 'src/main/libs'
+        }
+    }
 }
 
 dependencies {
   //compile 'com.android.support:multidex:1.0.0'
   compile(name:'leanConnectInterfaceLib-debug', ext:'aar')
   compile(name:'leanConnectLibForServices-debug', ext:'aar')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
