@@ -45,7 +45,3 @@ dependencies {
   compile(name:'leanConnectInterfaceLib-debug', ext:'aar')
   compile(name:'leanConnectLibForServices-debug', ext:'aar')
 }
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
