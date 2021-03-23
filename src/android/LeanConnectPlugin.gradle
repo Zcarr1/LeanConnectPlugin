@@ -20,9 +20,9 @@ android {
     multiDexEnabled true
   }
 
-  dexOptions {
+  /*dexOptions {
     javaMaxHeapSize "4g"
-  }
+  }*/
 
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
