@@ -32,6 +32,6 @@ android {
 
 dependencies {
   compile 'com.android.support:multidex:1.0.0'
-  compile(name:'leanConnectInterfaceLib-debug', ext:'aar')
-  compile(name:'leanConnectLibForServices-debug', ext:'aar')
+  compile(name:'libs/leanConnectInterfaceLib-debug', ext:'aar')
+  compile(name:'libs/leanConnectLibForServices-debug', ext:'aar')
 }
