@@ -127,6 +127,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
             String uidType = args.optString(3, null);
 
             Log.d("commandCycle", commandCycle);
+            Log.d("null1", "null");
+            Log.d("null2", null);
             Log.d("uidType", commandCycle);
 
             leanConnectInterface.getTag(logicalReader, domain, commandCycle, uidType);
