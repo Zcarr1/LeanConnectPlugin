@@ -129,7 +129,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             Log.d("commandCycle", commandCycle);
             Log.d("uidType", commandCycle);
 
-            leanConnectInterface.getTag(logicalReader, domain, null, null);
+            leanConnectInterface.getTag(logicalReader, domain, commandCycle, uidType);
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
