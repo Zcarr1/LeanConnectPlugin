@@ -12,11 +12,11 @@ exports.disconnect = function (success, error) {
     exec(success, error, 'LeanConnectPlugin', 'disconnect', []);
 };
 
-exports.getTag = function (arg0, success, error) {
+exports.getTag = function (arg0, arg1, arg2, arg3, success, error) {
     exec(success, error, 'LeanConnectPlugin', 'getTag', [arg0, arg1, arg2, arg3]);
 };
 
-exports.readTag = function (arg0, success, error) {
+exports.readTag = function (arg0, arg1, arg2, arg3, success, error) {
     exec(success, error, 'LeanConnectPlugin', 'readTag', [arg0, arg1, arg2, arg3]);
 };
 
@@ -28,14 +28,14 @@ exports.getLogicalReaders = function (success, error) {
     exec(success, error, 'LeanConnectPlugin', 'getLogicalReaders', []);
 };
 
-exports.enableNdef = function (arg0, success, error) {
+exports.enableNdef = function (arg0, arg1, arg2, success, error) {
     exec(success, error, 'LeanConnectPlugin', 'enableNdef', [arg0, arg1, arg2]);
 };
 
-exports.disableNdef = function (arg0, success, error) {
+exports.disableNdef = function (arg0, arg1, arg2, success, error) {
     exec(success, error, 'LeanConnectPlugin', 'disableNdef', [arg0, arg1, arg2]);
 };
 
-exports.switchNdef = function (arg0, success, error) {
+exports.switchNdef = function (arg0, arg1, arg2, success, error) {
     exec(success, error, 'LeanConnectPlugin', 'switchNdef', [arg0, arg1, arg2]);
 };
