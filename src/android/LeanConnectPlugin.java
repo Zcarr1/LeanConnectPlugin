@@ -123,10 +123,12 @@ public class LeanConnectPlugin extends CordovaPlugin {
             this.setOnCommandResponseListener(callbackContext);
             String logicalReader = args.getString(0);
             String domain = args.getString(1);
-            leanConnectInterface.getTag(logicalReader, domain, null, null);
+            String commandCycle = args.getString(2, null);
+            String uidType = args.getString(3, null);
+            leanConnectInterface.getTag(logicalReader, domain, commandCycle, uidType);
         } catch (Exception e) {
             e.printStackTrace();
-            callbackContext.error("Tag name is undefined");
+            callbackContext.error(e.getMessage());
         }
     }
 
