@@ -123,13 +123,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             this.setOnCommandResponseListener(callbackContext);
             String logicalReader = args.getString(0);
             String domain = args.getString(1);
-            String commandCycle = args.optString(2, null);
-            String uidType = args.optString(3, null);
-
-            Log.d("commandCycle", commandCycle);
-            Log.d("null1", "null");
-            Log.d("null2", null);
-            Log.d("uidType", commandCycle);
+            String commandCycle = args.getString(2);
+            String uidType = args.getString(3);
+            /*String commandCycle = args.optString(2, null);
+            String uidType = args.optString(3, null);*/
 
             leanConnectInterface.getTag(logicalReader, domain, commandCycle, uidType);
         } catch (Exception e) {
