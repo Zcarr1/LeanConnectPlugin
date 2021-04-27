@@ -138,7 +138,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             String uuid = args.getString(2);
             String tagType = getUuidInfoTagType(uuid);
             String xmlReport = args.getString(3);
-            leanConnectInterface.readTag(logicalReader, domain, null, null, uuid, tagType, xmlReport);
+            leanConnectInterface.readTag(logicalReader, domain, null, null, uuid, xmlReport);
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
