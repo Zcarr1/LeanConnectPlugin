@@ -173,7 +173,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             String uuid = args.getString(2);
             String tagtype = getUuidInfoTagType(uuid);
             int action = args.getInt(3);
-            leanConnectInterface.enableDisableNdef(logicalReader, domain, null, null, uuid, tagtype, action);
+            leanConnectInterface.enableDisableNdef(logicalReader, domain, null, null, uuid, action);
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
@@ -282,10 +282,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
     }
 
     protected boolean putUuidInfo(@NonNull String uuid, @NonNull String tagtype) {
-        if (uuidInfos == null) uuidInfos = new Hashtable<>();
+        if (uuidInfos == null) uuidInfos = new Hashtable<String, Map<String, String>>();
         if (uuid.isEmpty()) return false;
 
-        Map<String, String> infos = new Hashtable<>();
+        Map<String, String> infos = new Hashtable<String, String>();
         infos.put("tagtype", tagtype);
         uuidInfos.put(uuid, infos);
         return true;
@@ -295,7 +295,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         if (uuid.isEmpty()) return null;
 
         Map<String, String> infos = uuidInfos.get(uuid);
-        return (infos == null ? new Hashtable<>() : infos);
+        return (infos == null ? new Hashtable<String, String>() : infos);
     }
 
     protected String getUuidInfoTagType(@NonNull String uuid) {
