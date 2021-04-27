@@ -13,7 +13,7 @@ exports.disconnect = function (success, error) {
 };
 
 exports.getTag = function (arg0, success, error) {
-    exec(success, error, 'LeanConnectPlugin', 'getTag', [arg0, arg1]);
+    exec(success, error, 'LeanConnectPlugin', 'getTag', [arg0, arg1, arg2, arg3]);
 };
 
 exports.readTag = function (arg0, success, error) {
