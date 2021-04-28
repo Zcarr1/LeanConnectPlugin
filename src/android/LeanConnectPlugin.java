@@ -141,8 +141,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
             this.setOnCommandResponseListener(callbackContext);
             String logicalReader = args.getString(0);
             String domain = args.getString(1);
-            String commandCycle = getString(2);
-            String uidType = getString(3);
+            String commandCycle = args.getString(2);
+            String uidType = args.getString(3);
             String uuid = args.getString(4);
             //String tagType = getUuidInfoTagType(uuid);
             String xmlReport = args.getString(5);
