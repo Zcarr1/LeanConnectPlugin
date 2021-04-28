@@ -16,8 +16,8 @@ exports.getTag = function (arg0, arg1, arg2, arg3, success, error) {
     exec(success, error, 'LeanConnectPlugin', 'getTag', [arg0, arg1, arg2, arg3]);
 };
 
-exports.readTag = function (arg0, arg1, arg2, arg3, success, error) {
-    exec(success, error, 'LeanConnectPlugin', 'readTag', [arg0, arg1, arg2, arg3]);
+exports.readTag = function (arg0, arg1, arg2, arg3, arg4, arg5, success, error) {
+    exec(success, error, 'LeanConnectPlugin', 'readTag', [arg0, arg1, arg2, arg3, arg4, arg5]);
 };
 
 exports.hello = function (success, error) {
