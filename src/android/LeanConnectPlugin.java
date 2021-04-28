@@ -237,7 +237,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             }
 
             @Override
-            public void onGetTagResponse(String uuid, String tagType, String[] mediaList, int error) {
+            public void onGetTagResponse(String uid, String tagType, String[] mediaList, int error) {
                 try {
                     mediaList = (mediaList == null) ? new String[0] : mediaList;
 
@@ -247,13 +247,13 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     }
 
                     String response = new JSONObject()
-                                    .put("uuid", uuid)
+                                    .put("uid", uid)
                                     .put("tagType", tagType)
                                     .put("mediaList", media)
                                     .put("error", error)
                                     .toString();
                     
-                    putUuidInfo(uuid, tagType);
+                    putUuidInfo(uid, tagType);
                     callbackContext.success(response);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -262,10 +262,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             }
             
             @Override
-            public void onReadTagResponse(String uuid, String xmlReport, int error) {
+            public void onReadTagResponse(String uid, String xmlReport, int error) {
                 try {
                     String response = new JSONObject()
-                                    .put("uuid", uuid)
+                                    .put("uid", uid)
                                     .put("xmlReport", xmlReport)
                                     .put("error", error)
                                     .toString();
@@ -277,10 +277,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             }
 
             @Override
-            public void onEnableDisableNDefResponse(String uuid, int action, int prevStatus, int newStatus, int error) {
+            public void onEnableDisableNDefResponse(String uid, int action, int prevStatus, int newStatus, int error) {
                 try {
                     String response = new JSONObject()
-                                    .put("uuid", uuid)
+                                    .put("uid", uid)
                                     .put("action", action)
                                     .put("prevStatus", prevStatus)
                                     .put("newStatus", newStatus)
