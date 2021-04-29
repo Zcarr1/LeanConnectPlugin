@@ -45,14 +45,12 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        //Context context = this.cordova.getActivity().getApplicationContext();
         boolean result = false;
 
         if (action.equals(INIT)) {
             this.init(callbackContext);
             result = true;
         } else if (action.equals(CONNECT)) {
-            //this.leanConnectInterface = new LeanConnectMobile(context);
             this.connect(callbackContext);
             result = true;
         } else if (action.equals(DISCONNECT)) {
