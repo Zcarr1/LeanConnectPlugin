@@ -93,7 +93,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private void init(CallbackContext callbackContext) {
         try {
             Context context = this.cordova.getActivity().getApplicationContext();
-            //this.leanConnectInterface = new LeanConnectMobile(context);
+            this.leanConnectInterface = new LeanConnectMobile(context);
             callbackContext.success();
         } catch (Exception e) {
             e.printStackTrace();
