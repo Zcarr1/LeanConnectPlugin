@@ -230,7 +230,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void connect(CallbackContext callbackContext) {
         try {
-            this.setOnConnectionListener(callbackContext);
             leanConnectInterface.connect();
         } catch (Exception e) {
             e.printStackTrace();
@@ -240,7 +239,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void disconnect(CallbackContext callbackContext) {
         try {
-            this.setOnConnectionListener(callbackContext);
             leanConnectInterface.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
@@ -258,7 +256,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
             commandCycle = (commandCycle.equals("null")) ? null : commandCycle;
             uidType = (uidType.equals("null")) ? null : uidType;
             
-            this.setOnCommandResponseListener(callbackContext);
             leanConnectInterface.getTag(logicalReader, domain, commandCycle, uidType);
         } catch (Exception e) {
             e.printStackTrace();
@@ -280,7 +277,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
             uidType = (uidType.equals("null")) ? null : uidType;
             uuid = (uuid.equals("null")) ? null : uuid;
             
-            this.setOnCommandResponseListener(callbackContext);
             leanConnectInterface.readTag(logicalReader, domain, commandCycle, uidType, uuid, xmlReport);
         } catch (Exception e) {
             e.printStackTrace();
@@ -300,7 +296,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void getLogicalReaders(CallbackContext callbackContext) {
         try {
-            this.setOnCommandResponseListener(callbackContext);
             leanConnectInterface.getLogicalReaders();
         } catch (Exception e) {
             e.printStackTrace();
@@ -316,7 +311,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
             String tagtype = getUuidInfoTagType(uuid);
             int action = args.getInt(3);
 
-            this.setOnCommandResponseListener(callbackContext);
             leanConnectInterface.enableDisableNdef(logicalReader, domain, null, null, uuid, action);
         } catch (Exception e) {
             e.printStackTrace();
