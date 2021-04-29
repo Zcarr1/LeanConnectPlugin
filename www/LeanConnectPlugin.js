@@ -1,5 +1,9 @@
 var exec = require('cordova/exec');
 
+exports.init = function (success, error) {
+    exec(success, error, 'LeanConnectPlugin', 'init', []);
+};
+
 exports.isConnected = function (success, error) {
     exec(success, error, 'LeanConnectPlugin', 'isConnected', []);
 };

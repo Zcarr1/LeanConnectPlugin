@@ -27,6 +27,7 @@ import hsc.com.leanconnectlibforservices.LeanConnectMobile;
  */
 public class LeanConnectPlugin extends CordovaPlugin {
 
+    private static final String INIT = "init";
     private static final String IS_CONNECTED = "isConnected";
     private static final String CONNECT = "connect";
     private static final String DISCONNECT = "disconnect";
@@ -44,11 +45,14 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        Context context = this.cordova.getActivity().getApplicationContext();
+        //Context context = this.cordova.getActivity().getApplicationContext();
         boolean result = false;
 
-        if (action.equals(CONNECT)) {
-            this.leanConnectInterface = new LeanConnectMobile(context);
+        if (action.equals(INIT)) {
+            this.init(callbackContext);
+            result = true;
+        } else if (action.equals(CONNECT)) {
+            //this.leanConnectInterface = new LeanConnectMobile(context);
             this.connect(callbackContext);
             result = true;
         } else if (action.equals(DISCONNECT)) {
@@ -86,10 +90,21 @@ public class LeanConnectPlugin extends CordovaPlugin {
         return result;
     }
 
+    private void init(CallbackContext callbackContext) {
+        try {
+            Context context = this.cordova.getActivity().getApplicationContext();
+            this.leanConnectInterface = new LeanConnectMobile(context);
+            callbackContext.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            callbackContext.error(e.getMessage());
+        }
+    }
+
     private void isConnected(CallbackContext callbackContext) {
         try {
             boolean res = leanConnectInterface.isConnected();
-            PluginResult result = new PluginResult(PluginResult.Status.OK, res);
+            PluginResult result = new PluginResult(PluginResult.Status., res);
             result.setKeepCallback(false);
             callbackContext.sendPluginResult(result);
         } catch (Exception e) {
