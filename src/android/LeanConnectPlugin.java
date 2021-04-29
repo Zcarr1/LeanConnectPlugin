@@ -100,7 +100,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void connect(CallbackContext callbackContext) {
         try {
-            this.setOnCommandResponseListener(callbackContext);
+            this.setOnConnectionListener(callbackContext);
             leanConnectInterface.connect();
         } catch (Exception e) {
             e.printStackTrace();
