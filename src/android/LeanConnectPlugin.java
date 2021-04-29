@@ -95,7 +95,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 @Override
                 public void onConnectionCompleted() {
                     //callbackContext.success();
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
                     pluginResult.setKeepCallback(false);
                     callbackContext.sendPluginResult(pluginResult);
                 }
@@ -103,7 +103,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 @Override
                 public void onDisconnectionCompleted() {
                     //callbackContext.success();
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
                     pluginResult.setKeepCallback(false);
                     callbackContext.sendPluginResult(pluginResult);
                 }
@@ -111,7 +111,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 @Override
                 public void onInitialized() {
                     //callbackContext.success();
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
                     pluginResult.setKeepCallback(false);
                     callbackContext.sendPluginResult(pluginResult);
                 }
