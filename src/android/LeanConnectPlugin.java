@@ -86,109 +86,11 @@ public class LeanConnectPlugin extends CordovaPlugin {
         return false;
     }
 
-    private void init(final CallbackContext callbackContext) {
+    private void init(CallbackContext callbackContext) {
         try {
             Context context = this.cordova.getActivity().getApplicationContext();
             this.leanConnectInterface = new LeanConnectMobile(context);
-
-            this.leanConnectInterface.setOnConnectionListener(new LeanConnectInterface.OnConnectionListener() {
-                @Override
-                public void onConnectionCompleted() {
-                    callbackContext.success();
-                }
-    
-                @Override
-                public void onDisconnectionCompleted() {
-                    callbackContext.success();
-                }
-    
-                @Override
-                public void onInitialized() {
-                    callbackContext.success();
-                }
-            });
-
-            this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
-                @Override
-                public void onGetLogicalReadersResponse(String[] logicalReaders, String errorMsg) {
-                    try {
-                        JSONArray readers = new JSONArray();
-                        if (logicalReaders != null) {
-                            for (int i = 0; i < logicalReaders.length; i++) {
-                                readers.put(logicalReaders[i]);
-                            }
-                        }
-    
-                        String response = new JSONObject()
-                                        .put("logicalReaders", readers)
-                                        .put("errorMsg", errorMsg)
-                                        .toString();
-                        callbackContext.success(response);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        callbackContext.error(e.getMessage());
-                    }
-                }
-    
-                @Override
-                public void onGetTagResponse(String uid, String tagType, String[] mediaList, int error) {
-                    try {
-                        mediaList = (mediaList == null) ? new String[0] : mediaList;
-    
-                        JSONArray media = new JSONArray();
-                        for (int i = 0; i < mediaList.length; i++) {
-                            media.put(mediaList[i]);
-                        }
-    
-                        String response = new JSONObject()
-                                        .put("uid", uid)
-                                        .put("tagType", tagType)
-                                        .put("mediaList", media)
-                                        .put("error", error)
-                                        .toString();
-                        
-                        putUuidInfo(uid, tagType);
-                        callbackContext.success(response);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        callbackContext.error(e.getMessage());
-                    }
-                }
-                
-                @Override
-                public void onReadTagResponse(String uid, String xmlReport, int error) {
-                    try {
-                        String response = new JSONObject()
-                                        .put("uid", uid)
-                                        .put("xmlReport", xmlReport)
-                                        .put("error", error)
-                                        .toString();
-                        callbackContext.success(response);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        callbackContext.error(e.getMessage());
-                    }
-                }
-    
-                @Override
-                public void onEnableDisableNDefResponse(String uid, int action, int prevStatus, int newStatus, int error) {
-                    try {
-                        String response = new JSONObject()
-                                        .put("uid", uid)
-                                        .put("action", action)
-                                        .put("prevStatus", prevStatus)
-                                        .put("newStatus", newStatus)
-                                        .put("error", error)
-                                        .toString();
-                        callbackContext.success(response);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        callbackContext.error(e.getMessage());
-                    }
-                }
-            });
-
-            //callbackContext.success();
+            callbackContext.success();
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
@@ -209,6 +111,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void connect(CallbackContext callbackContext) {
         try {
+            this.setOnConnectionListener(callbackContext);
             leanConnectInterface.connect();
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,6 +121,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void disconnect(CallbackContext callbackContext) {
         try {
+            this.setOnConnectionListener(callbackContext);
             leanConnectInterface.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
@@ -234,7 +138,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
             commandCycle = (commandCycle.equals("null")) ? null : commandCycle;
             uidType = (uidType.equals("null")) ? null : uidType;
-
+            
+            this.setOnCommandResponseListener(callbackContext);
             leanConnectInterface.getTag(logicalReader, domain, commandCycle, uidType);
         } catch (Exception e) {
             e.printStackTrace();
@@ -256,6 +161,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
             uidType = (uidType.equals("null")) ? null : uidType;
             uuid = (uuid.equals("null")) ? null : uuid;
             
+            this.setOnCommandResponseListener(callbackContext);
             leanConnectInterface.readTag(logicalReader, domain, commandCycle, uidType, uuid, xmlReport);
         } catch (Exception e) {
             e.printStackTrace();
@@ -275,6 +181,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
 
     private void getLogicalReaders(CallbackContext callbackContext) {
         try {
+            this.setOnCommandResponseListener(callbackContext);
             leanConnectInterface.getLogicalReaders();
         } catch (Exception e) {
             e.printStackTrace();
@@ -289,11 +196,114 @@ public class LeanConnectPlugin extends CordovaPlugin {
             String uuid = args.getString(2);
             String tagtype = getUuidInfoTagType(uuid);
             int action = args.getInt(3);
+
+            this.setOnCommandResponseListener(callbackContext);
             leanConnectInterface.enableDisableNdef(logicalReader, domain, null, null, uuid, action);
         } catch (Exception e) {
             e.printStackTrace();
             callbackContext.error(e.getMessage());
         }
+    }
+
+    private void setOnConnectionListener(final CallbackContext callbackContext) {
+        this.leanConnectInterface.setOnConnectionListener(new LeanConnectInterface.OnConnectionListener() {
+            @Override
+            public void onConnectionCompleted() {
+                callbackContext.success();
+            }
+
+            @Override
+            public void onDisconnectionCompleted() {
+                callbackContext.success();
+            }
+
+            @Override
+            public void onInitialized() {
+                callbackContext.success();
+            }
+        });
+    }
+
+    private void setOnCommandResponseListener(final CallbackContext callbackContext) {
+        this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
+            @Override
+            public void onGetLogicalReadersResponse(String[] logicalReaders, String errorMsg) {
+                try {
+                    JSONArray readers = new JSONArray();
+                    if (logicalReaders != null) {
+                        for (int i = 0; i < logicalReaders.length; i++) {
+                            readers.put(logicalReaders[i]);
+                        }
+                    }
+
+                    String response = new JSONObject()
+                                    .put("logicalReaders", readers)
+                                    .put("errorMsg", errorMsg)
+                                    .toString();
+                    callbackContext.success(response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onGetTagResponse(String uid, String tagType, String[] mediaList, int error) {
+                try {
+                    mediaList = (mediaList == null) ? new String[0] : mediaList;
+
+                    JSONArray media = new JSONArray();
+                    for (int i = 0; i < mediaList.length; i++) {
+                        media.put(mediaList[i]);
+                    }
+
+                    String response = new JSONObject()
+                                    .put("uid", uid)
+                                    .put("tagType", tagType)
+                                    .put("mediaList", media)
+                                    .put("error", error)
+                                    .toString();
+                    
+                    putUuidInfo(uid, tagType);
+                    callbackContext.success(response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }
+            }
+            
+            @Override
+            public void onReadTagResponse(String uid, String xmlReport, int error) {
+                try {
+                    String response = new JSONObject()
+                                    .put("uid", uid)
+                                    .put("xmlReport", xmlReport)
+                                    .put("error", error)
+                                    .toString();
+                    callbackContext.success(response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onEnableDisableNDefResponse(String uid, int action, int prevStatus, int newStatus, int error) {
+                try {
+                    String response = new JSONObject()
+                                    .put("uid", uid)
+                                    .put("action", action)
+                                    .put("prevStatus", prevStatus)
+                                    .put("newStatus", newStatus)
+                                    .put("error", error)
+                                    .toString();
+                    callbackContext.success(response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    callbackContext.error(e.getMessage());
+                }
+            }
+        });
     }
 
     protected boolean putUuidInfo(@NonNull String uuid, @NonNull String tagtype) {
