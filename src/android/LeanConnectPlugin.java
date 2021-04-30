@@ -120,9 +120,9 @@ public class LeanConnectPlugin extends CordovaPlugin {
         
                 @Override
                 public void onInitialized() {
-                    PluginResult result = new PluginResult(PluginResult.Status.OK, "Initialized");
+                    /*PluginResult result = new PluginResult(PluginResult.Status.OK, "Initialized");
                     result.setKeepCallback(false);
-                    myCallbackContext.sendPluginResult(result);
+                    myCallbackContext.sendPluginResult(result);*/
                 }
             });
 
