@@ -98,7 +98,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         return false;
     }
 
-    private void init(final CallbackContext callbackContext) {
+    private void init() {
         try {
             Context context = this.cordova.getActivity().getApplicationContext();
             this.leanConnectInterface = new LeanConnectMobile(context);
@@ -106,26 +106,16 @@ public class LeanConnectPlugin extends CordovaPlugin {
             this.leanConnectInterface.setOnConnectionListener(new LeanConnectInterface.OnConnectionListener() {
                 @Override
                 public void onConnectionCompleted() {
-                    /*PluginResult result = new PluginResult(PluginResult.Status.OK, "Connected");
-                    result.setKeepCallback(false);
-                    myCallbackContext.sendPluginResult(result);*/
                     myCallbackContext.success("Connected");
                 }
         
                 @Override
                 public void onDisconnectionCompleted() {
-                    /*PluginResult result = new PluginResult(PluginResult.Status.OK, "Disconnected");
-                    result.setKeepCallback(false);
-                    myCallbackContext.sendPluginResult(result);*/
                     myCallbackContext.success("Disconnected");
                 }
         
                 @Override
-                public void onInitialized() {
-                    //PluginResult result = new PluginResult(PluginResult.Status.OK, "Initialized");
-                    //result.setKeepCallback(false);
-                    //myCallbackContext.sendPluginResult(result);
-                }
+                public void onInitialized() {}
             });
 
             this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
@@ -144,9 +134,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
                                         .put("errorMsg", errorMsg)
                                         .toString();
                         
-                        /*PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, response);
-                        pluginResult.setKeepCallback(false);
-                        myCallbackContext.sendPluginResult(pluginResult);*/
                         myCallbackContext.success(response);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -172,9 +159,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
                                         .toString();
                         
                         putUuidInfo(uid, tagType);
-                        /*PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, response);
-                        pluginResult.setKeepCallback(false);
-                        myCallbackContext.sendPluginResult(pluginResult);*/
                         myCallbackContext.success(response);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -190,10 +174,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
                                         .put("xmlReport", xmlReport)
                                         .put("error", error)
                                         .toString();
-                        
-                        /*PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, response);
-                        pluginResult.setKeepCallback(false);
-                        myCallbackContext.sendPluginResult(pluginResult);*/
+
                         myCallbackContext.success(response);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -212,9 +193,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
                                         .put("error", error)
                                         .toString();
                         
-                        /*PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, response);
-                        pluginResult.setKeepCallback(false);
-                        myCallbackContext.sendPluginResult(pluginResult);*/
                         myCallbackContext.success(response);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -230,7 +208,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
-    private void isConnected(CallbackContext callbackContext) {
+    private void isConnected() {
         try {
             boolean res = leanConnectInterface.isConnected();
             PluginResult result = new PluginResult(PluginResult.Status.OK, res);
@@ -242,7 +220,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
-    private void connect(CallbackContext callbackContext) {
+    private void connect() {
         try {
             leanConnectInterface.connect();
             PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
@@ -254,19 +232,16 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
-    private void disconnect(CallbackContext callbackContext) {
+    private void disconnect() {
         try {
             leanConnectInterface.disconnect();
-            /*PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-            result.setKeepCallback(true);
-            myCallbackContext.sendPluginResult(result);*/
         } catch (Exception e) {
             e.printStackTrace();
             myCallbackContext.error(e.getMessage());
         }
     }
 
-    private void getTag(JSONArray args, CallbackContext callbackContext) {
+    private void getTag(JSONArray args) {
         try {
             String logicalReader = args.getString(0);
             String domain = args.getString(1);
@@ -277,16 +252,13 @@ public class LeanConnectPlugin extends CordovaPlugin {
             uidType = (uidType.equals("null")) ? null : uidType;
             
             leanConnectInterface.getTag(logicalReader, domain, commandCycle, uidType);
-            /*PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-            result.setKeepCallback(true);
-            myCallbackContext.sendPluginResult(result);*/
         } catch (Exception e) {
             e.printStackTrace();
             myCallbackContext.error(e.getMessage());
         }
     }
 
-    private void readTag(JSONArray args, CallbackContext callbackContext) {
+    private void readTag(JSONArray args) {
         try {
             String logicalReader = args.getString(0);
             String domain = args.getString(1);
@@ -301,16 +273,13 @@ public class LeanConnectPlugin extends CordovaPlugin {
             uuid = (uuid.equals("null")) ? null : uuid;
             
             leanConnectInterface.readTag(logicalReader, domain, commandCycle, uidType, uuid, xmlReport);
-            /*PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-            result.setKeepCallback(true);
-            myCallbackContext.sendPluginResult(result);*/
         } catch (Exception e) {
             e.printStackTrace();
             myCallbackContext.error(e.getMessage());
         }
     }
 
-    private void hello(CallbackContext callbackContext) {
+    private void hello() {
         try {
             leanConnectInterface.hello();
             myCallbackContext.success();
@@ -320,19 +289,16 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
-    private void getLogicalReaders(CallbackContext callbackContext) {
+    private void getLogicalReaders() {
         try {
             leanConnectInterface.getLogicalReaders();
-            /*PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-            result.setKeepCallback(true);
-            myCallbackContext.sendPluginResult(result);*/
         } catch (Exception e) {
             e.printStackTrace();
             myCallbackContext.error(e.getMessage());
         }
     }
 
-    private void enableDisableNdef(JSONArray args, CallbackContext callbackContext) {
+    private void enableDisableNdef(JSONArray args) {
         try {
             String logicalReader = args.getString(0);
             String domain = args.getString(1);
@@ -341,9 +307,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
             int action = args.getInt(3);
 
             leanConnectInterface.enableDisableNdef(logicalReader, domain, null, null, uuid, action);
-            /*PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-            result.setKeepCallback(true);
-            myCallbackContext.sendPluginResult(result);*/
         } catch (Exception e) {
             e.printStackTrace();
             myCallbackContext.error(e.getMessage());
