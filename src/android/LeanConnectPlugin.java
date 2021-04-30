@@ -309,8 +309,6 @@ public class LeanConnectPlugin extends CordovaPlugin {
             //String tagtype = getUuidInfoTagType(uuid);
             int action = args.getInt(5);
 
-            Log.d("action", action);
-
             commandCycle = (commandCycle.equals("null") || commandCycle.isEmpty()) ? null : commandCycle;
             uidType = (uidType.equals("null") || uidType.isEmpty()) ? null : uidType;
             uuid = (uuid.equals("null") || uuid.isEmpty()) ? null : uuid;
