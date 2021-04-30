@@ -120,7 +120,9 @@ public class LeanConnectPlugin extends CordovaPlugin {
                 }
         
                 @Override
-                public void onInitialized() {}
+                public void onInitialized() {
+                    //myCallbackContext.success("Initialized");
+                }
             });
 
             this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
