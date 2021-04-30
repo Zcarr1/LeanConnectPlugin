@@ -40,44 +40,56 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private static final String SWITCH_NDEF = "switchNdef";
 
     private LeanConnectInterface leanConnectInterface;
+    CallbackContext myCallbackContext;
 
     Dictionary<String, Map<String, String>> uuidInfos = null;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals(INIT)) {
+            this.myCallbackContext = callbackContext;
             this.init(callbackContext);
             return true;
         } else if (action.equals(CONNECT)) {
+            this.myCallbackContext = callbackContext;
             this.connect(callbackContext);
             return true;
         } else if (action.equals(DISCONNECT)) {
+            this.myCallbackContext = callbackContext;
             this.disconnect(callbackContext);
             return true;
         } else if (action.equals(IS_CONNECTED)) {
+            this.myCallbackContext = callbackContext;
             this.isConnected(callbackContext);
             return true;
         } else if (action.equals(GET_TAG)) {
+            this.myCallbackContext = callbackContext;
             this.getTag(args, callbackContext);
             return true;
         } else if (action.equals(READ_TAG)) {
+            this.myCallbackContext = callbackContext;
             this.readTag(args, callbackContext);
             return true;
         } else if (action.equals(HELLO)) {
+            this.myCallbackContext = callbackContext;
             this.hello(callbackContext);
             return true;
         } else if (action.equals(GET_LOGICAL_READERS)) {
+            this.myCallbackContext = callbackContext;
             this.getLogicalReaders(callbackContext);
             return true;
         } else if (action.equals(ENABLE_NDEF)) {
+            this.myCallbackContext = callbackContext;
             args.put(LeanConnectInterface.COMMAND_ENABLEDISABLENDEF_ACTION_ENABLE);
             this.enableDisableNdef(args, callbackContext);
             return true;
         } else if (action.equals(DISABLE_NDEF)) {
+            this.myCallbackContext = callbackContext;
             args.put(LeanConnectInterface.COMMAND_ENABLEDISABLENDEF_ACTION_DISABLE);
             this.enableDisableNdef(args, callbackContext);
             return true;
         } else if (action.equals(SWITCH_NDEF)) {
+            this.myCallbackContext = callbackContext;
             args.put(LeanConnectInterface.COMMAND_ENABLEDISABLENDEF_ACTION_SWITCH);
             this.enableDisableNdef(args, callbackContext);
             return true;
@@ -97,7 +109,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     //callbackContext.success();
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
                     pluginResult.setKeepCallback(false);
-                    callbackContext.sendPluginResult(pluginResult);
+                    myCallbackContext.sendPluginResult(pluginResult);
                 }
         
                 @Override
@@ -105,7 +117,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     //callbackContext.success();
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
                     pluginResult.setKeepCallback(false);
-                    callbackContext.sendPluginResult(pluginResult);
+                    myCallbackContext.sendPluginResult(pluginResult);
                 }
         
                 @Override
@@ -113,14 +125,14 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     //callbackContext.success();
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
                     pluginResult.setKeepCallback(false);
-                    callbackContext.sendPluginResult(pluginResult);
+                    myCallbackContext.sendPluginResult(pluginResult);
                 }
             });
 
-            callbackContext.success();
+            myCallbackContext.success();
         } catch (Exception e) {
             e.printStackTrace();
-            callbackContext.error(e.getMessage());
+            myCallbackContext.error(e.getMessage());
         }
 
         this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
@@ -141,10 +153,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, response);
                     pluginResult.setKeepCallback(false);
-                    callbackContext.sendPluginResult(pluginResult);
+                    myCallbackContext.sendPluginResult(pluginResult);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    callbackContext.error(e.getMessage());
+                    myCallbackContext.error(e.getMessage());
                 }
             }
     
@@ -169,10 +181,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, response);
                     pluginResult.setKeepCallback(false);
-                    callbackContext.sendPluginResult(pluginResult);
+                    myCallbackContext.sendPluginResult(pluginResult);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    callbackContext.error(e.getMessage());
+                    myCallbackContext.error(e.getMessage());
                 }
             }
             
@@ -187,10 +199,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, response);
                     pluginResult.setKeepCallback(false);
-                    callbackContext.sendPluginResult(pluginResult);
+                    myCallbackContext.sendPluginResult(pluginResult);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    callbackContext.error(e.getMessage());
+                    myCallbackContext.error(e.getMessage());
                 }
             }
     
@@ -207,10 +219,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, response);
                     pluginResult.setKeepCallback(false);
-                    callbackContext.sendPluginResult(pluginResult);
+                    myCallbackContext.sendPluginResult(pluginResult);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    callbackContext.error(e.getMessage());
+                    myCallbackContext.error(e.getMessage());
                 }
             }
         });
@@ -221,10 +233,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             boolean res = leanConnectInterface.isConnected();
             PluginResult result = new PluginResult(PluginResult.Status.OK, res);
             result.setKeepCallback(false);
-            callbackContext.sendPluginResult(result);
+            myCallbackContext.sendPluginResult(result);
         } catch (Exception e) {
             e.printStackTrace();
-            callbackContext.error(e.getMessage());
+            myCallbackContext.error(e.getMessage());
         }
     }
 
@@ -233,10 +245,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             leanConnectInterface.connect();
             PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
             pluginResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(pluginResult);
+            myCallbackContext.sendPluginResult(pluginResult);
         } catch (Exception e) {
             e.printStackTrace();
-            callbackContext.error(e.getMessage());
+            myCallbackContext.error(e.getMessage());
         }
     }
 
@@ -245,10 +257,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             leanConnectInterface.disconnect();
             PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
             pluginResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(pluginResult);
+            myCallbackContext.sendPluginResult(pluginResult);
         } catch (Exception e) {
             e.printStackTrace();
-            callbackContext.error(e.getMessage());
+            myCallbackContext.error(e.getMessage());
         }
     }
 
@@ -265,10 +277,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             leanConnectInterface.getTag(logicalReader, domain, commandCycle, uidType);
             PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
             pluginResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(pluginResult);
+            myCallbackContext.sendPluginResult(pluginResult);
         } catch (Exception e) {
             e.printStackTrace();
-            callbackContext.error(e.getMessage());
+            myCallbackContext.error(e.getMessage());
         }
     }
 
@@ -289,20 +301,20 @@ public class LeanConnectPlugin extends CordovaPlugin {
             leanConnectInterface.readTag(logicalReader, domain, commandCycle, uidType, uuid, xmlReport);
             PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
             pluginResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(pluginResult);
+            myCallbackContext.sendPluginResult(pluginResult);
         } catch (Exception e) {
             e.printStackTrace();
-            callbackContext.error(e.getMessage());
+            myCallbackContext.error(e.getMessage());
         }
     }
 
     private void hello(CallbackContext callbackContext) {
         try {
             leanConnectInterface.hello();
-            callbackContext.success();
+            myCallbackContext.success();
         } catch (Exception e) {
             e.printStackTrace();
-            callbackContext.error(e.getMessage());
+            myCallbackContext.error(e.getMessage());
         }
     }
 
@@ -311,10 +323,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             leanConnectInterface.getLogicalReaders();
             PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
             pluginResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(pluginResult);
+            myCallbackContext.sendPluginResult(pluginResult);
         } catch (Exception e) {
             e.printStackTrace();
-            callbackContext.error(e.getMessage());
+            myCallbackContext.error(e.getMessage());
         }
     }
 
@@ -329,10 +341,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
             leanConnectInterface.enableDisableNdef(logicalReader, domain, null, null, uuid, action);
             PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
             pluginResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(pluginResult);
+            myCallbackContext.sendPluginResult(pluginResult);
         } catch (Exception e) {
             e.printStackTrace();
-            callbackContext.error(e.getMessage());
+            myCallbackContext.error(e.getMessage());
         }
     }
 
