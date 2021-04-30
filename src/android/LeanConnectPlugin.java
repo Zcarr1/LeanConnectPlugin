@@ -48,50 +48,50 @@ public class LeanConnectPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals(INIT)) {
             this.myCallbackContext = callbackContext;
-            this.init(callbackContext);
+            this.init();
             return true;
         } else if (action.equals(CONNECT)) {
             this.myCallbackContext = callbackContext;
-            this.connect(callbackContext);
+            this.connect();
             return true;
         } else if (action.equals(DISCONNECT)) {
             this.myCallbackContext = callbackContext;
-            this.disconnect(callbackContext);
+            this.disconnect();
             return true;
         } else if (action.equals(IS_CONNECTED)) {
             this.myCallbackContext = callbackContext;
-            this.isConnected(callbackContext);
+            this.isConnected();
             return true;
         } else if (action.equals(GET_TAG)) {
             this.myCallbackContext = callbackContext;
-            this.getTag(args, callbackContext);
+            this.getTag(args);
             return true;
         } else if (action.equals(READ_TAG)) {
             this.myCallbackContext = callbackContext;
-            this.readTag(args, callbackContext);
+            this.readTag(args);
             return true;
         } else if (action.equals(HELLO)) {
             this.myCallbackContext = callbackContext;
-            this.hello(callbackContext);
+            this.hello();
             return true;
         } else if (action.equals(GET_LOGICAL_READERS)) {
             this.myCallbackContext = callbackContext;
-            this.getLogicalReaders(callbackContext);
+            this.getLogicalReaders();
             return true;
         } else if (action.equals(ENABLE_NDEF)) {
             this.myCallbackContext = callbackContext;
             args.put(LeanConnectInterface.COMMAND_ENABLEDISABLENDEF_ACTION_ENABLE);
-            this.enableDisableNdef(args, callbackContext);
+            this.enableDisableNdef(args);
             return true;
         } else if (action.equals(DISABLE_NDEF)) {
             this.myCallbackContext = callbackContext;
             args.put(LeanConnectInterface.COMMAND_ENABLEDISABLENDEF_ACTION_DISABLE);
-            this.enableDisableNdef(args, callbackContext);
+            this.enableDisableNdef(args);
             return true;
         } else if (action.equals(SWITCH_NDEF)) {
             this.myCallbackContext = callbackContext;
             args.put(LeanConnectInterface.COMMAND_ENABLEDISABLENDEF_ACTION_SWITCH);
-            this.enableDisableNdef(args, callbackContext);
+            this.enableDisableNdef(args);
             return true;
         }
 
