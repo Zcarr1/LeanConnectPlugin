@@ -245,8 +245,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
             String commandCycle = args.getString(2);
             String uidType = args.getString(3);
 
-            commandCycle = (commandCycle.equals("null")) ? null : commandCycle;
-            uidType = (uidType.equals("null")) ? null : uidType;
+            commandCycle = (commandCycle.equals("null") || commandCycle.isEmpty()) ? null : commandCycle;
+            uidType = (uidType.equals("null") || uidType.isEmpty()) ? null : uidType;
             
             leanConnectInterface.getTag(logicalReader, domain, commandCycle, uidType);
         } catch (Exception e) {
@@ -265,9 +265,9 @@ public class LeanConnectPlugin extends CordovaPlugin {
             //String tagType = getUuidInfoTagType(uuid);
             String xmlReport = args.getString(5);
             
-            commandCycle = (commandCycle.equals("null")) ? null : commandCycle;
-            uidType = (uidType.equals("null")) ? null : uidType;
-            uuid = (uuid.equals("null")) ? null : uuid;
+            commandCycle = (commandCycle.equals("null") || commandCycle.isEmpty()) ? null : commandCycle;
+            uidType = (uidType.equals("null") || uidType.isEmpty()) ? null : uidType;
+            uuid = (uuid.equals("null") || uuid.isEmpty()) ? null : uuid;
             
             leanConnectInterface.readTag(logicalReader, domain, commandCycle, uidType, uuid, xmlReport);
         } catch (Exception e) {
@@ -299,11 +299,17 @@ public class LeanConnectPlugin extends CordovaPlugin {
         try {
             String logicalReader = args.getString(0);
             String domain = args.getString(1);
-            String uuid = args.getString(2);
-            String tagtype = getUuidInfoTagType(uuid);
+            String commandCycle = args.getString(2);
+            String uidType = args.getString(3);
+            String uuid = args.getString(4);
+            //String tagtype = getUuidInfoTagType(uuid);
             int action = args.getInt(3);
 
-            leanConnectInterface.enableDisableNdef(logicalReader, domain, null, null, uuid, action);
+            commandCycle = (commandCycle.equals("null") || commandCycle.isEmpty()) ? null : commandCycle;
+            uidType = (uidType.equals("null") || uidType.isEmpty()) ? null : uidType;
+            uuid = (uuid.equals("null") || uuid.isEmpty()) ? null : uuid;
+
+            leanConnectInterface.enableDisableNdef(logicalReader, domain, commandCycle, uidType, uuid, action);
         } catch (Exception e) {
             e.printStackTrace();
             myCallbackContext.error(e.getMessage());
