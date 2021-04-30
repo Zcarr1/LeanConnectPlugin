@@ -97,6 +97,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         } else if (action.equals(ENABLE_DISABLE_NDEF)) {
             this.myCallbackContext = callbackContext;
             this.enableDisableNdef(args);
+            return true;
         }
 
         return false;
