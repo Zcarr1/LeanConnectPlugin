@@ -32,14 +32,14 @@ exports.getLogicalReaders = function (success, error) {
     exec(success, error, 'LeanConnectPlugin', 'getLogicalReaders', []);
 };
 
-exports.enableNdef = function (arg0, arg1, arg2, success, error) {
-    exec(success, error, 'LeanConnectPlugin', 'enableNdef', [arg0, arg1, arg2]);
+exports.enableNdef = function (arg0, arg1, arg2, arg3, arg4, success, error) {
+    exec(success, error, 'LeanConnectPlugin', 'enableNdef', [arg0, arg1, arg2, arg3, arg4]);
 };
 
-exports.disableNdef = function (arg0, arg1, arg2, success, error) {
-    exec(success, error, 'LeanConnectPlugin', 'disableNdef', [arg0, arg1, arg2]);
+exports.disableNdef = function (arg0, arg1, arg2, arg3, arg4, success, error) {
+    exec(success, error, 'LeanConnectPlugin', 'disableNdef', [arg0, arg1, arg2, arg3, arg4]);
 };
 
-exports.switchNdef = function (arg0, arg1, arg2, success, error) {
-    exec(success, error, 'LeanConnectPlugin', 'switchNdef', [arg0, arg1, arg2]);
+exports.switchNdef = function (arg0, arg1, arg2, arg3, arg4, success, error) {
+    exec(success, error, 'LeanConnectPlugin', 'switchNdef', [arg0, arg1, arg2, arg3, arg4]);
 };
