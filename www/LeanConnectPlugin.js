@@ -43,3 +43,7 @@ exports.disableNdef = function (arg0, arg1, arg2, arg3, arg4, success, error) {
 exports.switchNdef = function (arg0, arg1, arg2, arg3, arg4, success, error) {
     exec(success, error, 'LeanConnectPlugin', 'switchNdef', [arg0, arg1, arg2, arg3, arg4]);
 };
+
+exports.enableDisableNdef = function (arg0, arg1, arg2, arg3, arg4, arg5, success, error) {
+    exec(success, error, 'LeanConnectPlugin', 'enableDisableNdef', [arg0, arg1, arg2, arg3, arg4, arg5]);
+};

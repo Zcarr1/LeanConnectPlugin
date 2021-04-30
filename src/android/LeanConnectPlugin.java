@@ -38,6 +38,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private static final String ENABLE_NDEF = "enableNdef";
     private static final String DISABLE_NDEF = "disableNdef";
     private static final String SWITCH_NDEF = "switchNdef";
+    private static final String ENABLE_DISABLE_NDEF = "enableDisableNdef";
 
     private LeanConnectInterface leanConnectInterface;
     CallbackContext myCallbackContext;
@@ -93,6 +94,9 @@ public class LeanConnectPlugin extends CordovaPlugin {
             args.put(LeanConnectInterface.COMMAND_ENABLEDISABLENDEF_ACTION_SWITCH);
             this.enableDisableNdef(args);
             return true;
+        } else if (action.equals(ENABLE_DISABLE_NDEF)) {
+            this.myCallbackContext = callbackContext;
+            this.enableDisableNdef(args);
         }
 
         return false;
@@ -304,6 +308,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
             String uuid = args.getString(4);
             //String tagtype = getUuidInfoTagType(uuid);
             int action = args.getInt(5);
+
+            Log.d("action", action);
 
             commandCycle = (commandCycle.equals("null") || commandCycle.isEmpty()) ? null : commandCycle;
             uidType = (uidType.equals("null") || uidType.isEmpty()) ? null : uidType;
