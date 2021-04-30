@@ -106,26 +106,17 @@ public class LeanConnectPlugin extends CordovaPlugin {
             this.leanConnectInterface.setOnConnectionListener(new LeanConnectInterface.OnConnectionListener() {
                 @Override
                 public void onConnectionCompleted() {
-                    //callbackContext.success();
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
-                    pluginResult.setKeepCallback(false);
-                    myCallbackContext.sendPluginResult(pluginResult);
+                    myCallbackContext.success();
                 }
         
                 @Override
                 public void onDisconnectionCompleted() {
-                    //callbackContext.success();
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
-                    pluginResult.setKeepCallback(false);
-                    myCallbackContext.sendPluginResult(pluginResult);
+                    myCallbackContext.success();
                 }
         
                 @Override
                 public void onInitialized() {
-                    //callbackContext.success();
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
-                    pluginResult.setKeepCallback(false);
-                    myCallbackContext.sendPluginResult(pluginResult);
+                    myCallbackContext.success();
                 }
             });
 
