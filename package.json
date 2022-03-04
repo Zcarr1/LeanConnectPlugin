@@ -1,6 +1,6 @@
 {
   "name": "info.androidabcd.plugins.leanconnect",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "plugin lean connect",
   "cordova": {
     "id": "info.androidabcd.plugins.leanconnect",

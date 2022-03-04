@@ -4,8 +4,18 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:4.1.1'
+    classpath 'com.android.tools.build:gradle:4.1.3'
   }
+}
+
+allprojects {
+    repositories {
+        maven {url "https://maven.google.com" }
+        jcenter()
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 android {
@@ -15,8 +25,8 @@ android {
   defaultConfig {
     minSdkVersion 22
     targetSdkVersion 29
-    versionCode 2
-    versionName '0.2'
+    versionCode 6
+    versionName '0.6'
     multiDexEnabled true
   }
 
@@ -31,6 +41,7 @@ android {
 }
 
 dependencies {
+  compile 'androidx.appcompat:appcompat:1.2.0'
   compile 'com.android.support:multidex:1.0.0'
   compile(name:'leanConnectInterfaceLib-debug', ext:'aar')
   compile(name:'leanConnectLibForServices-debug', ext:'aar')
