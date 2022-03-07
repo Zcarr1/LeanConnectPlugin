@@ -22,9 +22,7 @@ import android.util.Log;
 import hsc.com.leanConnectInterfaceLib.LeanConnectInterface;
 import hsc.com.leanconnectlibforservices.LeanConnectMobile;
 
-/**
- * This class echoes a string called from JavaScript.
- */
+
 public class LeanConnectPlugin extends CordovaPlugin {
 
     private static final String INIT = "init";
@@ -43,6 +41,10 @@ public class LeanConnectPlugin extends CordovaPlugin {
     private LeanConnectInterface leanConnectInterface;
     CallbackContext myCallbackContext;
 
+    // Dictionary used to store info (Uuid, TagType, Media) about tags read.
+    // The dictionary key is uuid.
+    // The map contains 1 pairs: [tagtype:value]
+    // This way the user has not to input tag info saved by commands.
     Dictionary<String, Map<String, String>> uuidInfos = null;
 
     @Override
@@ -107,7 +109,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         try {
             Context context = this.cordova.getActivity().getApplicationContext();
             this.leanConnectInterface = new LeanConnectMobile(context);
-
+                    
             this.leanConnectInterface.setOnConnectionListener(new LeanConnectInterface.OnConnectionListener() {
                 @Override
                 public void onConnectionCompleted() {
@@ -124,8 +126,9 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     //myCallbackContext.success("Initialized");
                 }
             });
-
+            
             this.leanConnectInterface.setOnCommandResponseListener(new LeanConnectInterface.OnCommandResponseListener() {
+                // callback getLogicalReaders
                 @Override
                 public void onGetLogicalReadersResponse(String[] logicalReaders, String errorMsg) {
                     try {
@@ -147,7 +150,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
                         myCallbackContext.error(e.getMessage());
                     }
                 }
-        
+                
+                // callback getTag
                 @Override
                 public void onGetTagResponse(String uid, String tagType, String[] mediaList, int error) {
                     try {
@@ -173,6 +177,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
                     }
                 }
                 
+                // callback readTag
                 @Override
                 public void onReadTagResponse(String uid, String xmlReport, int error) {
                     try {
@@ -188,7 +193,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
                         myCallbackContext.error(e.getMessage());
                     }
                 }
-        
+                
+                // callback enableDisableNDef
                 @Override
                 public void onEnableDisableNDefResponse(String uid, int action, int prevStatus, int newStatus, int error) {
                     try {
@@ -215,6 +221,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
+    // services: controlla se è bound
     private void isConnected() {
         try {
             boolean res = leanConnectInterface.isConnected();
@@ -227,6 +234,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
+    // services: fa la bind()
     private void connect() {
         try {
             leanConnectInterface.connect();
@@ -236,6 +244,7 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
+    // services: fa la unbind()
     private void disconnect() {
         try {
             leanConnectInterface.disconnect();
@@ -245,12 +254,13 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
+    // Used to get infos and recognize a tag
     private void getTag(JSONArray args) {
         try {
-            String logicalReader = args.getString(0);
-            String domain = args.getString(1);
-            String commandCycle = args.getString(2);
-            String uidType = args.getString(3);
+            String logicalReader = args.getString(0); // logical reader name
+            String domain = args.getString(1);        // domain name
+            String commandCycle = args.getString(2);  // command cycle in order to wait for tags, e.g "s10". Optional
+            String uidType = args.getString(3);       // type of uid requested. Optional
 
             commandCycle = (commandCycle.equals("null") || commandCycle.isEmpty()) ? null : commandCycle;
             uidType = (uidType.equals("null") || uidType.isEmpty()) ? null : uidType;
@@ -262,15 +272,15 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
+    // Read data from tag.
     private void readTag(JSONArray args) {
         try {
-            String logicalReader = args.getString(0);
-            String domain = args.getString(1);
-            String commandCycle = args.getString(2);
-            String uidType = args.getString(3);
-            String uuid = args.getString(4);
-            //String tagType = getUuidInfoTagType(uuid);
-            String xmlReport = args.getString(5);
+            String logicalReader = args.getString(0);  //logical reader name
+            String domain = args.getString(1);         //domain name
+            String commandCycle = args.getString(2);   //command cycle in order to wait for tags, e.g "s10". Optional
+            String uidType = args.getString(3);        //type of uid requested. Optional
+            String uuid = args.getString(4);           //tag uid. Optional. If missing, no check will be executed.
+            String xmlReport = args.getString(5);      //xml report with empty xml tags. it will be returned with values in 'onReadTagResponse()'.
             
             commandCycle = (commandCycle.equals("null") || commandCycle.isEmpty()) ? null : commandCycle;
             uidType = (uidType.equals("null") || uidType.isEmpty()) ? null : uidType;
@@ -293,6 +303,8 @@ public class LeanConnectPlugin extends CordovaPlugin {
         }
     }
 
+    // Get the different logical readers supported by/connected to this lean connect
+    // return the list of logical readers or null if the information is not yet ready.
     private void getLogicalReaders() {
         try {
             leanConnectInterface.getLogicalReaders();
@@ -301,16 +313,16 @@ public class LeanConnectPlugin extends CordovaPlugin {
             myCallbackContext.error(e.getMessage());
         }
     }
-
+    
+    // Enable or disable a tag.
     private void enableDisableNdef(JSONArray args) {
         try {
-            String logicalReader = args.getString(0);
-            String domain = args.getString(1);
-            String commandCycle = args.getString(2);
-            String uidType = args.getString(3);
-            String uuid = args.getString(4);
-            //String tagtype = getUuidInfoTagType(uuid);
-            int action = args.getInt(5);
+            String logicalReader = args.getString(0);   // logical reader name
+            String domain = args.getString(1);          // domain name
+            String commandCycle = args.getString(2);    // command cycle in order to wait for tags, e.g "s10". Optional
+            String uidType = args.getString(3);         // type of uid requested. Optional
+            String uuid = args.getString(4);            // tag uid. Optional. If missing, no check will be executed.
+            int action = args.getInt(5);                // actions permitted: enable, disable, switch. Use defined constants 'COMMAND_ENABLEDISABLENDEF_ACTION_*'.
 
             commandCycle = (commandCycle.equals("null") || commandCycle.isEmpty()) ? null : commandCycle;
             uidType = (uidType.equals("null") || uidType.isEmpty()) ? null : uidType;
