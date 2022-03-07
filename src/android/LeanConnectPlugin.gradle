@@ -42,7 +42,7 @@ allprojects {
 //
 
 android {
-  compileSdk 29
+  compileSdk 31
   buildToolsVersion '30.0.2'
 
   defaultConfig {
