@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-  implementation 'androidx.appcompat:appcompat:1.4.1'
-  api(name:'leanConnectInterfaceLib-debug', ext:'aar')
-  api(name:'leanConnectLibForServices-debug', ext:'aar')
+  compile 'androidx.appcompat:appcompat:1.4.1'
+  compile(name:'leanConnectInterfaceLib-debug', ext:'aar')
+  compile(name:'leanConnectLibForServices-debug', ext:'aar')
 }
