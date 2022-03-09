@@ -21,7 +21,6 @@ allprojects {
 android {
   compileSdkVersion 31
   buildToolsVersion '30.0.2'
-  pippo "1.7.0"
 
   defaultConfig {
     minSdkVersion 22
@@ -39,6 +38,7 @@ android {
 
 dependencies {
   implementation 'androidx.appcompat:appcompat:1.4.1'
+  implementation "androidx.core:core-ktx:1.7.0"
   implementation 'androidx.multidex:multidex:2.0.1'
   api(name:'leanConnectInterfaceLib-debug', ext:'aar')
   api(name:'leanConnectLibForServices-debug', ext:'aar')
