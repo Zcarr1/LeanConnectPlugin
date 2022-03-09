@@ -21,6 +21,7 @@ allprojects {
 android {
   compileSdkVersion 31
   buildToolsVersion '30.0.2'
+  androidXCore "1.7.0"
 
   defaultConfig {
     minSdkVersion 22
@@ -28,7 +29,6 @@ android {
     versionCode 10
     versionName '0.10'
     multiDexEnabled true
-    androidXCore = "1.7.0"
   }
 
   compileOptions {
