@@ -27,6 +27,7 @@ android {
     targetSdkVersion 31
     versionCode 10
     versionName '0.10'
+    multiDexEnabled true
   }
 
   compileOptions {
@@ -37,6 +38,7 @@ android {
 
 dependencies {
   implementation 'androidx.appcompat:appcompat:1.4.1'
+  implementation 'androidx.multidex:multidex:2.0.1'
   api(name:'leanConnectInterfaceLib-debug', ext:'aar')
   api(name:'leanConnectLibForServices-debug', ext:'aar')
 }
