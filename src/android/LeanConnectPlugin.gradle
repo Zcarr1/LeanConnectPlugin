@@ -13,7 +13,7 @@ allprojects {
     google()
     jcenter()
     flatDir {
-      dirs 'libs'
+      dirs 'src/main/libs'
     }
   }
 }
@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-  compile 'androidx.appcompat:appcompat:1.4.1'
-  compile(name:'leanConnectInterfaceLib-debug', ext:'aar')
-  compile(name:'leanConnectLibForServices-debug', ext:'aar')
+  implementation 'androidx.appcompat:appcompat:1.4.1'
+  api(name:'leanConnectInterfaceLib-debug', ext:'aar')
+  api(name:'leanConnectLibForServices-debug', ext:'aar')
 }
