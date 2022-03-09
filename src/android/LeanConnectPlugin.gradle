@@ -37,7 +37,6 @@ android {
 
 dependencies {
   implementation 'androidx.appcompat:appcompat:1.4.1'
-  implementation 'com.android.support:multidex:1.0.0'
   api(name:'leanConnectInterfaceLib-debug', ext:'aar')
   api(name:'leanConnectLibForServices-debug', ext:'aar')
 }
