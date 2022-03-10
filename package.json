@@ -1,17 +1,27 @@
 {
-  "name": "info.androidabcd.plugins.leanconnect",
+  "name": "cordova-plugin-mobile-leanconnect",
   "version": "0.10.0",
-  "description": "plugin lean connect",
+  "description": "wrapper plugin of HSC api",
   "cordova": {
-    "id": "info.androidabcd.plugins.leanconnect",
+    "id": "cordova-plugin-mobile-leanconnect",
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zcarr1/LeanConnectPlugin.git"
   },
   "keywords": [
     "ecosystem:cordova",
-    "cordova-android"
+    "cordova-android",
+    "cordova-ios"
   ],
   "author": "Stefano Scarrone",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zcarr1/LeanConnectPlugin/issues"
+  },
+  "homepage": "https://github.com/Zcarr1/LeanConnectPlugin#readme"
 }

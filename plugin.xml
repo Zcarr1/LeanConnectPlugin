@@ -16,8 +16,16 @@
 			<uses-permission android:name="android.permission.NFC" />
 		</config-file>
 		<source-file src="src/android/LeanConnectPlugin.java" target-dir="src/info/androidabcd/plugins/leanconnect/LeanConnectPlugin" />
-		<framework src="src/android/LeanConnectPlugin.gradle" custom="true" type="gradleReference" />
+		<framework custom="true" src="src/android/LeanConnectPlugin.gradle" type="gradleReference" />
 		<resource-file src="src/android/libs/leanConnectInterfaceLib-debug.aar" target="libs/leanConnectInterfaceLib-debug.aar" />
 		<resource-file src="src/android/libs/leanConnectLibForServices-debug.aar" target="libs/leanConnectLibForServices-debug.aar" />
+	</platform>
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="LeanConnectPlugin">
+				<param name="ios-package" value="LeanConnectPlugin" />
+			</feature>
+		</config-file>
+		<source-file src="src/ios/LeanConnectPlugin.m" />
 	</platform>
 </plugin>
