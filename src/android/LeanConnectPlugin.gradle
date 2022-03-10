@@ -4,7 +4,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:7.1.2'
+    classpath 'com.android.tools.build:gradle:7.1.1'
   }
   ext {
     androidXCore = "1.6.0" 
