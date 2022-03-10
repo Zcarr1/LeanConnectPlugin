@@ -4,8 +4,9 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:7.1.2'
+    classpath 'com.android.tools.build:gradle:7.1.1'
   }
+}
 
 allprojects {
   repositories {
@@ -36,7 +37,8 @@ android {
 
 dependencies {
   implementation 'androidx.appcompat:appcompat:1.4.1'
-  implementation "androidx.core:core-ktx:1.7.0"
+  //implementation "androidx.core:core-ktx:1.7.0"
+  
   api(name:'leanConnectInterfaceLib-debug', ext:'aar')
   api(name:'leanConnectLibForServices-debug', ext:'aar')
 }
