@@ -1,17 +1,12 @@
 /********* LeanConnectPlugin.m Cordova Plugin Implementation *******/
 
-#import <Cordova/CDV.h>
-
-@interface LeanConnectPlugin : CDVPlugin {
-  // Member variables go here.
-}
-
-- (void)coolMethod:(CDVInvokedUrlCommand*)command;
-@end
+#import "LeanConnectPlugin.h"
 
 @implementation LeanConnectPlugin
 
-- (void)coolMethod:(CDVInvokedUrlCommand*)command
+- (void)pluginInitialize {}
+
+- (void)isConnected:(CDVInvokedUrlCommand*)command
 {
     CDVPluginResult* pluginResult = nil;
     NSString* echo = [command.arguments objectAtIndex:0];

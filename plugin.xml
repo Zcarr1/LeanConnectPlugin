@@ -27,5 +27,8 @@
 			</feature>
 		</config-file>
 		<source-file src="src/ios/LeanConnectPlugin.m" />
+		<header-file src="src/ios/LeanConnectPlugin.h" />
+		<resource-file src="src/ios/libs/leanConnectInterfaceLib-debug.aar" />
+		<resource-file src="src/ios/libs/leanConnectLibForServices-debug.aar" />
 	</platform>
 </plugin>
