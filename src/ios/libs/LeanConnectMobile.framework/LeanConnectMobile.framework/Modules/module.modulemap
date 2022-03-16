@@ -1,0 +1,11 @@
+framework module LeanConnectMobile {
+  umbrella header "LeanConnectMobile.h"
+
+  export *
+  module * { export * }
+}
+
+module LeanConnectMobile.Swift {
+    header "LeanConnectMobile-Swift.h"
+    requires objc
+}

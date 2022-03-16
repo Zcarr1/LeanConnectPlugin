@@ -4,7 +4,9 @@
 
 @implementation LeanConnectPlugin
 
-- (void)pluginInitialize {}
+- (void)pluginInitialize {
+    
+}
 
 - (void)isConnected:(CDVInvokedUrlCommand*)command
 {
