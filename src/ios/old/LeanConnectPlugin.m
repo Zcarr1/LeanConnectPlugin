@@ -4,22 +4,28 @@
 
 @implementation LeanConnectPlugin
 
-- (void)pluginInitialize {
-    
+- (void)init {
+    setOnConnectionListener()
 }
 
 - (void)isConnected:(CDVInvokedUrlCommand*)command
 {
     CDVPluginResult* pluginResult = nil;
-    NSString* echo = [command.arguments objectAtIndex:0];
+    BOOL res = isConnected();
 
     if (echo != nil && [echo length] > 0) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:echo];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:res];
+        [pluginResult setKeepCallbackAsBool:res];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)connect:(CDVInvokedUrlCommand*)command
+{
+    
 }
 
 @end

@@ -21,14 +21,23 @@
 		<resource-file src="src/android/libs/leanConnectLibForServices-debug.aar" target="libs/leanConnectLibForServices-debug.aar" />
 	</platform>
 	<platform name="ios">
-		<config-file parent="/*" target="config.xml">
+		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="LeanConnectPlugin">
 				<param name="ios-package" value="LeanConnectPlugin" />
 			</feature>
 		</config-file>
-		<header-file src="src/ios/LeanConnectPlugin.h" />
-		<source-file src="src/ios/LeanConnectPlugin.m" />
+		<!--header-file src="src/ios/LeanConnectPlugin.h" /-->
+		<!--source-file src="src/ios/LeanConnectPlugin.m" /-->
+		<source-file src="src/ios/LeanConnectPlugin.swift" />
 		<source-file src="src/ios/libs/LeanConnectMobile.framework" target-dir="libs" framework="true" />
-		<framework src="src/ios/libs/LeanConnectMobile.framework" embed="true" custom="true" />
+		<framework src="src/ios/libs/LeanConnectMobile.framework" embed="false" custom="true" />
+		<podspec>
+			<config>
+				<source url="https://cdn.cocoapods.org/"/>
+			</config>
+			<pods use-frameworks="true">
+				<pod name="SQLite.swift" git="https://github.com/stephencelis/SQLite.swift.git" tag="0.13.2"/>
+			</pods>
+		</podspec>
 	</platform>
 </plugin>
