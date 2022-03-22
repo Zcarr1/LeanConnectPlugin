@@ -3,7 +3,7 @@ import LeanConnectMobile
 
 @objc(LeanConnectPlugin) class LeanConnectPlugin : CDVPlugin{
     // MARK: Properties
-    var pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
+    var pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
     var sharedMobile = LeanConnectMobile.sharedInstance
 
     func init(_ command: CDVInvokedUrlCommand) {
@@ -205,7 +205,7 @@ import LeanConnectMobile
     }
 
     func jsonToString(jsonObj: [String: Any]) -> String {
-        let jsonData = try! JSONSerialization.data(withJSONObject: para )
+        let jsonData = try! JSONSerialization.data(withJSONObject: jsonObj)
         let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) as! String
         return jsonString
     }
