@@ -29,9 +29,6 @@ import LeanConnectMobile
                 jsResponse["logicalReaders"] = logicalReaders
                 jsResponse["errorMsg"] = errorMsg
 
-                //let jsonData = try! JSONSerialization.data(withJSONObject: jsResponse)
-                //let response = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)
-
                 let response = jsonToString(jsResponse)
                 pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: response)
             }
