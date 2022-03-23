@@ -6,7 +6,7 @@ import LeanConnectMobile
     var pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
     var sharedMobile = LeanConnectMobile.sharedInstance
 
-    func init(_ command: CDVInvokedUrlCommand) {
+    func pluginInitialize(_ command: CDVInvokedUrlCommand) {
         sharedMobile.setOnConnectionListener(LeanConnectMobileOnConnectionListener {
             func onConnectionCompleted() {
                 pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "Connected")
@@ -18,7 +18,7 @@ import LeanConnectMobile
                 self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
             }
             
-            func onInitialized()) {
+            func onInitialized() {
 
             }
         })
