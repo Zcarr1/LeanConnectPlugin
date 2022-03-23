@@ -26,11 +26,9 @@
 				<param name="ios-package" value="LeanConnectPlugin" />
 			</feature>
 		</config-file>
-		<!--header-file src="src/ios/LeanConnectPlugin.h" /-->
-		<!--source-file src="src/ios/LeanConnectPlugin.m" /-->
 		<source-file src="src/ios/LeanConnectPlugin.swift" />
-		<source-file src="src/ios/libs/LeanConnectMobile.framework" target-dir="libs" framework="true" />
-		<framework src="src/ios/libs/LeanConnectMobile.framework" embed="false" custom="true" />
+		<source-file src="src/ios/libs/LeanConnectMobileKit.framework" target-dir="libs" framework="true" />
+		<!--framework src="src/ios/libs/LeanConnectMobileKit.framework" embed="false" custom="true" /-->
 		<podspec>
 			<config>
 				<source url="https://cdn.cocoapods.org/"/>

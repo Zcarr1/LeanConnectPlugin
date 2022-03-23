@@ -1,0 +1,4 @@
+framework module LeanConnectMobileKit {
+  header "LeanConnectMobileKit-Swift.h"
+  requires objc
+}

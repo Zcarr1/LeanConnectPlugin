@@ -1,0 +1,120 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)
+// swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name LeanConnectMobileKit
+import CoreNFC
+import Foundation
+import SQLite
+import Swift
+import UIKit
+import _Concurrency
+public struct CommonErrors {
+  public static var ERR_OK: Swift.Int
+  public static var ERR_OK_CONTROLLER_ADDED: Swift.Int
+  public static var ERR_READER_NOT_FOUND: Swift.Int
+  public static var ERR_READER_INCOMPATIBLE: Swift.Int
+  public static var ERR_READER_NOT_AVAILABLE: Swift.Int
+  public static var ERR_READER_ERROR: Swift.Int
+  public static var ERR_NO_TAG_IN_FIELD: Swift.Int
+  public static var ERR_WRONG_TAG_IN_FIELD: Swift.Int
+  public static var ERR_TAG_CONNECTION_ERROR: Swift.Int
+  public static var ERR_TAGTYPE_NOT_COMPATIBLE_OR_NOT_INITIALIZED: Swift.Int
+  public static var ERR_TAGTYPE_COMMAND_NOT_PERMITTED: Swift.Int
+  public static var ERR_TAGTYPE_NOT_FOUND: Swift.Int
+  public static var ERR_READ_ERROR: Swift.Int
+  public static var ERR_REQUIRED_NDEF: Swift.Int
+  public static var ERR_WRITE_ERROR: Swift.Int
+  public static var ERR_GETTAG_REQUIRED: Swift.Int
+  public static var ERR_GETTAG_REQUIRED_UID_MISMATCH: Swift.Int
+  public static var ERR_GETTAG_REQUIRED_TAGTYPE_MISMATCH: Swift.Int
+  public static var ERR_CONTROLLER_NON_GENERIC_TOO_MANY_FOUND: Swift.Int
+  public static var ERR_CONTROLLER_NOT_FOUND: Swift.Int
+  public static var ERR_TERMINAL_UNKNOWN: Swift.Int
+  public static var ERR_CANCELLED_BY_USER: Swift.Int
+  public static var ERR_CERTIFICATE_NOT_VALID: Swift.Int
+  public static var ERR_INTERNAL_UITHREAD: Swift.Int
+  public static var ERR_INTERNAL_TAGTYPE_NOT_FOUND: Swift.Int
+  public static var ERR_INTERNAL_NOT_IMPLEMENTED: Swift.Int
+  public static var ERR_INTERNAL_PARAMETER_NOT_FOUND: Swift.Int
+  public static var ERR_LR_NOT_PROVIDED: Swift.Int
+  public static var ERR_LR_NOT_SUPPORTED: Swift.Int
+  public static var ERR_DOMAIN_NOT_PROVIDED: Swift.Int
+  public static var ERR_DOMAIN_WITHOUT_TAGDOMAINS: Swift.Int
+  public static var ERR_DOMAIN_TAGDOMAIN_NOT_FOUND: Swift.Int
+  public static var ERR_READER_TOO_MANY_FOUND: Swift.Int
+  public static var ERR_TERMINALTYPE_NOT_FOUND: Swift.Int
+  public static var ERR_TERMINALTYPE_TECHNOLOGYSTANDARD_UNKNOWN: Swift.Int
+  public static var ERR_TERMINALTYPE_LIBRERIA_UNKNOWN: Swift.Int
+  public static var ERR_TERMINALTYPE_TECHNOLOGYSTANDARD_NOT_FOUND: Swift.Int
+  public static var ERR_COMMANDCYCLE_FORMAT_NOT_VALID: Swift.Int
+  public static var ERR_WEBSERVICE_CONNECTION: Swift.Int
+  public static var ERR_XML_PARSING: Swift.Int
+  public static var ERR_XML_SUBFIELDS_NOT_FOUND: Swift.Int
+  public static var ERR_STRUTTURATRANSPONDER_FIELD_ERROR: Swift.Int
+  public static var ERR_STRUTTURATRANSPONDER_FIELD_NOT_FOUND: Swift.Int
+  public static var ERR_TAGTYPE_MANY_IDENTIFIED: Swift.Int
+  public static var ERR_TAG_MEDIA_NOT_SUPPORTED: Swift.Int
+}
+@_hasMissingDesignatedInitializers public class LeanController {
+  public func controllerAutoDiscover(_ genericTerminalEnable: Swift.Bool) -> Swift.Int
+  public func controllerDeviceDiscover(_ genericTerminalEnable: Swift.Bool) throws -> Swift.Int
+  public func getOperatingSystem(_ controllerName: Swift.String) -> [Swift.String : Swift.AnyObject]
+  public func getOperatingSystem() -> Swift.Int
+  public func getControllerName() -> Swift.String?
+  public func getLogicalReaderNames() -> [Swift.String]?
+  public func getPhysicalReaderNames() -> [Swift.String : [Swift.String]]
+  public func getTechnologyNames(physicalReaderName: Swift.String) -> [Swift.String]
+  public func getLibraryName(physicalReaderName: Swift.String) -> Swift.String
+  public func getLibraryVersion(physicalReaderName: Swift.String) -> Swift.String
+  public func addPhysicalReaders(logicalReaderName: Swift.String, physicalReaderNames: [Swift.String]) -> Swift.Bool
+  public func addTechnologies(physicalReaderName: Swift.String, technologies: [Swift.String]) -> Swift.Bool
+  public func addLibrary(physicalReaderName: Swift.String, library: Swift.String) -> Swift.Bool
+  public func addLibraryVersion(physicalReaderName: Swift.String, libraryVersion: Swift.String) -> Swift.Bool
+  public func addTerminalParameters(terminalName: Swift.String, terminalParameters: [Swift.String : Swift.AnyObject]) -> Swift.Bool
+  public func addTerminalParameters(terminalName: Swift.String, parameterName: Swift.String) -> Swift.AnyObject
+  public func getParameter(terminalName: Swift.String, parameterName: Swift.String) -> Swift.AnyObject
+  public func getPhysicalReaderNameSet() -> Swift.Set<Swift.String>
+  public func verifyOsCompatibility() -> Swift.Bool
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class PhysicalReader {
+  public func getTechnologies(_ physicalReaderName: Swift.String) throws -> [Swift.String : Any]?
+  public func getTechnologies() throws -> Swift.Int
+  public func getLibrary(_ physicalReaderName: Swift.String) throws -> [Swift.String : Any]?
+  public func getLibrary() throws -> Swift.Int
+  @objc deinit
+}
+public protocol LeanConnectMobileOnCommandResponseListener : AnyObject {
+  func onGetLogicalReadersResponse(logicalReaders: [Swift.String], errorMsg: Swift.String)
+  func onGetTagResponse(uid: Swift.String, tagType: Swift.String, mediaList: [Swift.String], error: Swift.Int)
+  func onReadTagResponse(uid: Swift.String, xmlReport: Swift.String, error: Swift.Int)
+  func onEnableDisableNDefResponse(uid: Swift.String, action: Swift.Int, prevStatus: Swift.Int, newStatus: Swift.Int, error: Swift.Int)
+}
+public protocol LeanConnectMobileOnConnectionListener : AnyObject {
+  func onConnectionCompleted()
+  func onDisconnectionCompleted()
+  func onInitialized()
+}
+@_hasMissingDesignatedInitializers public class LeanConnectMobile {
+  public static var sharedInstance: LeanConnectMobileKit.LeanConnectMobile
+  public func isConnected() -> Swift.Bool
+  public func connect(completionHandler: @escaping (_ success: Swift.Bool) -> Swift.Void)
+  public func disconnect()
+  public func getLogicalReaders() -> [Swift.String]?
+  public func setOnCommandResponseListener(_ listener: LeanConnectMobileKit.LeanConnectMobileOnCommandResponseListener)
+  public func setOnConnectionListener(_ listener: LeanConnectMobileKit.LeanConnectMobileOnConnectionListener)
+  public func getTag(logicalReader: Swift.String, domain: Swift.String, commandCycle: Swift.String, _ uidType: Swift.String? = nil)
+  public func readTag(logicalReader: Swift.String, domain: Swift.String, commandCycle: Swift.String, uidType: Swift.String? = nil, uuid: Swift.String? = nil, xmlReport: Swift.String? = nil)
+  public func enableDisableNdef(logicalReader: Swift.String, domain: Swift.String, commandCycle: Swift.String, _ uidType: Swift.String, _ uuid: Swift.String, _ action: Swift.Int)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class LogicalReader {
+  public func getController(_ logicalReaderName: Swift.String) throws -> [Swift.String : Any]?
+  public func getController() throws -> Swift.Int?
+  public func getReaders(_ logicalReaderName: Swift.String) throws -> [Swift.String : Any]?
+  public func getReaders() throws -> Swift.Int?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class Terminal {
+  public func getParameters(terminalName: Swift.String) throws -> [Swift.String : Any]
+  @objc deinit
+}
