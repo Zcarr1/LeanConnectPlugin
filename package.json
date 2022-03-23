@@ -1,9 +1,9 @@
 {
-  "name": "cordova-plugin-mobile-leanconnect",
+  "name": "info.androidabcd.plugins.leanconnect",
   "version": "0.10.0",
   "description": "wrapper plugin of HSC api",
   "cordova": {
-    "id": "cordova-plugin-mobile-leanconnect",
+    "id": "info.androidabcd.plugins.leanconnect",
     "platforms": [
       "android",
       "ios"

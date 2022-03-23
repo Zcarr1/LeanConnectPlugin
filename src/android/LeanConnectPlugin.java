@@ -1,4 +1,4 @@
-package com.mobile.leanconnect.LeanConnectPlugin;
+package info.androidabcd.plugins.leanconnect;
 
 import org.apache.cordova.CordovaPlugin;
 
