@@ -1,5 +1,5 @@
 import CoreNFC
-import LeanConnectMobile
+import LeanConnectMobileKit
 
 @objc(LeanConnectPlugin) class LeanConnectPlugin : CDVPlugin{
     // MARK: Properties
