@@ -10,12 +10,10 @@ import LeanConnectMobileKit
         sharedMobile.setOnConnectionListener(LeanConnectMobileOnConnectionListener {
             func onConnectionCompleted() {
                 pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "Connected")
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
             }
 	
             func onDisconnectionCompleted() {
                 pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "Disconnected")
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
             }
             
             func onInitialized() {
