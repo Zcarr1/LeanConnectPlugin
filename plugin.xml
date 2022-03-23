@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="info.androidabcd.plugins.leanconnect" version="0.10.0"
+<plugin id="cordova-leanconnect-plugin" version="0.10.0"
 	xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>LeanConnectPlugin</name>
@@ -9,13 +9,13 @@
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="LeanConnectPlugin">
-				<param name="android-package" value="info.androidabcd.plugins.leanconnect.LeanConnectPlugin" />
+				<param name="android-package" value="com.mobile.leanconnect.LeanConnectPlugin" />
 			</feature>
 		</config-file>
 		<config-file parent="/*" target="AndroidManifest.xml">
 			<uses-permission android:name="android.permission.NFC" />
 		</config-file>
-		<source-file src="src/android/LeanConnectPlugin.java" target-dir="src/info/androidabcd/plugins/leanconnect/LeanConnectPlugin" />
+		<source-file src="src/android/LeanConnectPlugin.java" target-dir="src/com/mobile/leanconnect/leanconnect" />
 		<framework custom="true" src="src/android/LeanConnectPlugin.gradle" type="gradleReference" />
 		<resource-file src="src/android/libs/leanConnectInterfaceLib-debug.aar" target="libs/leanConnectInterfaceLib-debug.aar" />
 		<resource-file src="src/android/libs/leanConnectLibForServices-debug.aar" target="libs/leanConnectLibForServices-debug.aar" />
@@ -23,7 +23,7 @@
 	<platform name="ios">
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="LeanConnectPlugin">
-				<param name="ios-package" value="LeanConnectPlugin" />
+				<param name="ios-package" value="com.mobile.leanconnect.LeanConnectPlugin" />
 			</feature>
 		</config-file>
 		<source-file src="src/ios/LeanConnectPlugin.swift" />
