@@ -23,10 +23,11 @@
 	<platform name="ios">
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="LeanConnectPlugin">
-				<param name="ios-package" value="com.mobile.leanconnect.LeanConnectPlugin" />
+				<param name="ios-package" value="LeanConnectPlugin" />
 			</feature>
 		</config-file>
 		<source-file src="src/ios/LeanConnectPlugin.swift" />
+		<dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
 		<source-file src="src/ios/libs/LeanConnectMobileKit.framework" target-dir="libs" framework="true" />
 		<framework src="src/ios/libs/LeanConnectMobileKit.framework" embed="false" custom="true" />
 		<podspec>
