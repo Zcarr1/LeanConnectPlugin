@@ -39,8 +39,8 @@
                 <string>TAG</string>  
             </array>
         </config-file>
+		<framework src="CoreNFC.framework" weak="true" />
 		<source-file src="src/ios/LeanConnectPlugin.swift" />
-		<!--dependency id="cordova-plugin-add-swift-support" version="2.0.2"/-->
 		<source-file src="src/ios/libs/LeanConnectMobileKit.framework" target-dir="libs" framework="true" />
 		<framework src="src/ios/libs/LeanConnectMobileKit.framework" embed="false" custom="true" />
 		<podspec>
