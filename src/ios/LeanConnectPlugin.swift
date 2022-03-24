@@ -1,7 +1,8 @@
+import Foundation
 import CoreNFC
 import LeanConnectMobileKit
 
-@objc(LeanConnectPlugin) class LeanConnectPlugin : CDVPlugin, LeanConnectMobileOnConnectionListener, LeanConnectMobileOnCommandResponseListener{
+@objc(LeanConnectPlugin)class LeanConnectPlugin : CDVPlugin, LeanConnectMobileOnConnectionListener, LeanConnectMobileOnCommandResponseListener{
     var pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
     var sharedMobile = LeanConnectMobile.sharedInstance
     var callbackId = ""
@@ -21,14 +22,7 @@ import LeanConnectMobileKit
     }
     
     func onGetLogicalReadersResponse(logicalReaders: [String], errorMsg: String) {
-        var jsResponse : [String:Any] = [String:Any]()
-        jsResponse["logicalReaders"] = logicalReaders
-        jsResponse["errorMsg"] = errorMsg
-
-        let response = jsonToString(jsonObj: jsResponse)
-        pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: response)
         
-        self.commandDelegate!.send(pluginResult, callbackId: callbackId)
     }
     
     func onGetTagResponse(uid: String, tagType: String, mediaList: [String], error: Int) {
@@ -69,12 +63,13 @@ import LeanConnectMobileKit
         
         self.commandDelegate!.send(pluginResult, callbackId: callbackId)
     }
-
+    
+    
+    @objc(init:)
     func pluginInitialize(_ command: CDVInvokedUrlCommand) {
-        sharedMobile.setOnConnectionListener(self)
+        sharedMobile = LeanConnectMobile.sharedInstance
         sharedMobile.setOnCommandResponseListener(self)
-
-        self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+        sharedMobile.setOnConnectionListener(self)
     }
     
     /*
@@ -89,24 +84,21 @@ import LeanConnectMobileKit
         self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
     }
      */
-
+    
+    @objc(isConnected:)
     func isConnected(_ command: CDVInvokedUrlCommand) {
-        do {
-            let res = try sharedMobile.isConnected()
-            pluginResult?.setKeepCallbackAs(res)
-            pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: res)
-        } catch {
-            print("Unexpected error: \(error).")
-            pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
-        }
-
-        self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+        callbackId = command.callbackId
+        let res = sharedMobile.isConnected()
+        pluginResult?.setKeepCallbackAs(res)
+        pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: res)
+        self.commandDelegate!.send(pluginResult, callbackId: callbackId)
     }
-
+    
+    @objc(connect:)
     func connect(_ command: CDVInvokedUrlCommand) {
         callbackId = command.callbackId
         do {
-            try sharedMobile.connect { success in
+            try sharedMobile.connect {success in
                 guard success else {
                     return
                 }
@@ -118,7 +110,8 @@ import LeanConnectMobileKit
             self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
         }
     }
-
+    
+    @objc(disconnect:)
     func disconnect(_ command: CDVInvokedUrlCommand) {
         callbackId = command.callbackId
         do {
@@ -130,23 +123,35 @@ import LeanConnectMobileKit
         }
     }
     
+    @objc(getLogicalReaders:)
     func getLogicalReaders(_ command: CDVInvokedUrlCommand) {
         callbackId = command.callbackId
         do {
-            try sharedMobile.getLogicalReaders()
+            let logicalReaders = try sharedMobile.getLogicalReaders()
+    
+            var jsResponse : [String:Any] = [String:Any]()
+            jsResponse["logicalReaders"] = logicalReaders
+            jsResponse["errorMsg"] = ""
+            
+            let response = jsonToString(jsonObj: jsResponse)
+            
+            pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: response)
+            
+            self.commandDelegate!.send(pluginResult, callbackId: callbackId)
         } catch {
             print("Unexpected error: \(error).")
             pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
             self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
         }
     }
-
+    
+    @objc(getTag:)
     func getTag(_ command: CDVInvokedUrlCommand) {
         callbackId = command.callbackId
-        let logicalReader = (command.arguments[0] as? NSObject)?.value(forKey: "arg0") as! String
-        let domain = (command.arguments[0] as? NSObject)?.value(forKey: "arg1") as! String
-        let commandCycle = (command.arguments[0] as? NSObject)?.value(forKey: "arg2") as! String
-        let uidType = (command.arguments[0] as? NSObject)?.value(forKey: "arg3") as? String
+        let logicalReader = command.argument(at: 0) as! String? ?? ""
+        let domain = command.argument(at: 1) as! String? ?? ""
+        let commandCycle = command.argument(at: 2) as! String? ?? ""
+        let uidType = command.argument(at: 3) as! String? ?? ""
 
         do {
             try sharedMobile.getTag(logicalReader: logicalReader, domain: domain, commandCycle: commandCycle, uidType)
@@ -156,15 +161,16 @@ import LeanConnectMobileKit
             self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
         }
     }
-
+    
+    @objc(readTag:)
     func readTag(_ command: CDVInvokedUrlCommand) {
         callbackId = command.callbackId
-        let logicalReader = (command.arguments[0] as? NSObject)?.value(forKey: "arg0") as! String
-        let domain = (command.arguments[0] as? NSObject)?.value(forKey: "arg1") as! String
-        let commandCycle = (command.arguments[0] as? NSObject)?.value(forKey: "arg2") as! String
-        let uidType = (command.arguments[0] as? NSObject)?.value(forKey: "arg3") as! String
-        let uuid = (command.arguments[0] as? NSObject)?.value(forKey: "arg4") as! String
-        let xmlReport = (command.arguments[0] as? NSObject)?.value(forKey: "arg5") as? String
+        let logicalReader = command.argument(at: 0) as! String? ?? ""
+        let domain = command.argument(at: 1) as! String? ?? ""
+        let commandCycle = command.argument(at: 2) as! String? ?? ""
+        let uidType = command.argument(at: 3) as! String? ?? ""
+        let uuid = command.argument(at: 4) as! String? ?? ""
+        let xmlReport = command.argument(at: 5) as! String? ?? ""
 
         do {
             try sharedMobile.readTag(logicalReader: logicalReader, domain: domain, commandCycle: commandCycle, uidType: uidType, uuid: uuid, xmlReport: xmlReport)
@@ -174,15 +180,16 @@ import LeanConnectMobileKit
             self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
         }
     }
-
+    
+    @objc(enableDisableNdef:)
     func enableDisableNdef(_ command: CDVInvokedUrlCommand) {
         callbackId = command.callbackId
-        let logicalReader = (command.arguments[0] as? NSObject)?.value(forKey: "arg0") as! String
-        let domain = (command.arguments[0] as? NSObject)?.value(forKey: "arg1") as! String
-        let commandCycle = (command.arguments[0] as? NSObject)?.value(forKey: "arg2") as! String
-        let uidType = (command.arguments[0] as? NSObject)?.value(forKey: "arg3") as! String
-        let uuid = (command.arguments[0] as? NSObject)?.value(forKey: "arg4") as! String
-        let action = (command.arguments[0] as? NSObject)?.value(forKey: "arg5") as! Int
+        let logicalReader = command.argument(at: 0) as! String? ?? ""
+        let domain = command.argument(at: 1) as! String? ?? ""
+        let commandCycle = command.argument(at: 2) as! String? ?? ""
+        let uidType = command.argument(at: 3) as! String? ?? ""
+        let uuid = command.argument(at: 4) as! String? ?? ""
+        let action = command.argument(at: 5) as! Int
         
         do {
             try sharedMobile.enableDisableNdef(logicalReader: logicalReader, domain: domain, commandCycle: commandCycle, uidType, uuid, action)
