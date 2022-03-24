@@ -41,7 +41,7 @@
 		</config-file>
 		<framework src="CoreNFC.framework" weak="true" />
 		<config-file target="*-Info.plist" parent="NFCReaderUsageDescription">
-			<string>Read NFC Tags</string>
+			<string>Si richiede accesso alla funzionalità NFC</string>
 		</config-file>
 		<source-file src="src/ios/LeanConnectPlugin.swift" />
 		<source-file src="src/ios/libs/LeanConnectMobileKit.framework" target-dir="libs" framework="true" />
